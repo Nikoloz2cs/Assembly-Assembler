@@ -21,6 +21,10 @@ int main(int argc, char* argv[]) {
     inst_outfile.open(argv[argc - 1], std::ios::binary);
     std::vector<std::string> instructions;
 
+    // Filled during p1
+    std::vector<int> static_memory; // in decimal
+    std::unordered_map<std::string, int> func_labels; // "name" : line number for func
+
     /**
      * Phase 1:
      * Read all instructions, clean them of comments and whitespace DONE

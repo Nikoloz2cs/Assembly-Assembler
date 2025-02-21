@@ -1,0 +1,5 @@
+*.exe
+*.o
+*.bin
+*.asm
+./Testcases

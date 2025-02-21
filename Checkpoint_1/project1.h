@@ -65,7 +65,15 @@ void write_binary(int value,std::ofstream &outfile)
 int encode_Rtype(int opcode, int rs, int rt, int rd, int shftamt, int funccode) {
     return (opcode << 26) + (rs << 21) + (rt << 16) + (rd << 11) + (shftamt << 6) + funccode;
 }
-// Hint: What other instruction types need to be encoded?
+
+int encode_Itype(int opcode, int rs, int rt, int constant) {
+    return (opcode << 26) + (rs << 21) + (rt << 16) + constant;
+}
+
+int encode_Jtype(int opcode, int constant) {
+    return (opcode << 26) + constant;
+}
+
 
 
 /**

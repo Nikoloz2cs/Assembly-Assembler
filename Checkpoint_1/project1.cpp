@@ -45,6 +45,7 @@ int main(int argc, char* argv[]) {
                 continue;
             }
             instructions.push_back(str); // TODO This will need to change for labels
+            // std::cout << "instruction: " << str << std::endl;
         }
         infile.close();
     }
@@ -63,7 +64,7 @@ int main(int argc, char* argv[]) {
         std::string inst_type = terms[0];
         if (inst_type == "add") {
             int result = encode_Rtype(0,registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32);
-            write_binary(encode_Rtype(0,registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32),inst_outfile);
+            write_binary(result, inst_outfile);
         }
     }
 }

@@ -3,3 +3,4 @@
 *.bin
 *.asm
 ./Testcases
+*.py

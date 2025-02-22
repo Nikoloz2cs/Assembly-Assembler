@@ -3,6 +3,8 @@
 
 #include "project1.h"
 #include <vector>
+#include <iterator>
+#include <algorithm>
 #include <string>
 #include <unordered_map>
 #include <iostream>
@@ -23,7 +25,7 @@ int main(int argc, char* argv[]) {
 
     // Filled during p1
     std::vector<int> static_memory; // in decimal
-    std::unordered_map<std::string, int> func_labels; // "name" : line number for func
+    std::unordered_map<std::string, int> inst_labels; // "name" : line number for instruction labels
 
     /**
      * Phase 1:
@@ -54,6 +56,32 @@ int main(int argc, char* argv[]) {
         infile.close();
     }
 
+    // store data in static_memory vector
+    auto dataDir = std::find(instructions.begin(), instructions.end(), ".data");
+    auto textDir = std::find(instructions.begin(), instructions.end(), ".text");
+    auto globlDir = std::find(instructions.begin(), instructions.end(), ".globl main");
+    
+    std::cout << std::endl;
+    // iterate through static memory lables
+    for (auto it = dataDir + 1; it != textDir - 1; it++) {
+        std::vector<std::string> staticMemTerms = split(*it, " :");
+        // staticMemTerms[0]: label
+        // staticMemTerms[1]: directive (.word, .asciiz, etc)
+        // staticMemTerms[3] ~: data to store
+    }
+
+    instructions.erase(dataDir, globlDir + 1); // erase through beginning to main
+    
+    std::cout << std::endl;
+    // store data in inst_labels dictionary
+    // reverse iterate instructions, find label, store {lable: line#} in the dictionary, and delete
+    // line # can be found std::distance(instructions.begin(), inst)
+    for (std::string inst : instructions) {
+        if (isLabel(inst) != -1) {
+            // std::cout << isLabel(inst) << inst << std::endl;
+        }
+    }
+    
     /** Phase 2
      * Process all static memory, output to static memory file
      * TODO: All of this

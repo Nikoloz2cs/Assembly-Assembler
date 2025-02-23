@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
 
     // print all elements in the dictionary 
     std::unordered_map<std::string, int>::iterator instLabelsItr;
-    std::cout << "\nAll Elements : \n";
+    std::cout << "\nAll Elements in inst_labels: \n";
     for (instLabelsItr = inst_labels.begin(); instLabelsItr != inst_labels.end(); instLabelsItr++) {
       std::cout << instLabelsItr -> first << " " << instLabelsItr -> second << std::endl;
     }
@@ -93,17 +93,29 @@ int main(int argc, char* argv[]) {
         // staticMemTerms: { label, directive (.word, .asciiz, etc), data to store, ... }
         static_memory_labels[staticMemTerms[0]] = staticAdress;
 
-        // iterate through elements to store
-        for (auto termIter = staticMemTerms.begin() + 2; termIter != staticMemTerms.end(); termIter++){
-            std::string term = *termIter;
+        if (staticMemTerms[1] == ".word") { // if the directive is ".word"
+            // iterate through elements to store
+            for (auto termIter = staticMemTerms.begin() + 2; termIter != staticMemTerms.end(); termIter++){
+                std::string term = *termIter;
+    
+                if ((term.length() == 1) and isdigit(term[0])) { // if the term is numerical data, NOT label // term[0] (as opposed to just term) is to convert basic_string<char> to char
+                    static_memory.push_back(std::stoi(*termIter));
+                }
+                else { // if the term is label
+                    static_memory.push_back(4 * inst_labels[term]); // push it in bytes (e.g. Line 7 would be 28)
+                }
+                staticAdress += 4;
+            }
+        }
 
-            if ((term.length() == 1) and isdigit(term[0])) { // if the term is numerical data, NOT label
-                static_memory.push_back(std::stoi(*termIter));
+        else if (staticMemTerms[1] == ".asciiz") { // if the directive is ".asciiz" (null-terminating string)
+            std::string staticMemString = split(*staticIter, "\"")[1]; // this gives the first term after ", which is the string to be stored
+
+            // iterate through characters in the string
+            for (char c : staticMemString){
+                static_memory.push_back((int) c);
             }
-            else { // if the term is label
-                static_memory.push_back(4 * inst_labels[term]); // push it in bytes (e.g. Line 7 would be 28)
-            }
-            staticAdress += 4;
+            static_memory.push_back(char('\n'));
         }
     }
     

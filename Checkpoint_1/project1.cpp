@@ -24,8 +24,9 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> instructions;
 
     // Filled during p1
-    std::vector<int> static_memory; // in decimal
-    std::unordered_map<std::string, int> inst_labels; // "name" : line number for instruction labels
+    std::vector<int> static_memory; // { value in decimal }
+    std::unordered_map<std::string, int> static_memory_labels; // { "label_name" : byte address for static memory labels }
+    std::unordered_map<std::string, int> inst_labels; // { "label_name" : line number for instruction labels }
 
     /**
      * Phase 1:
@@ -56,31 +57,81 @@ int main(int argc, char* argv[]) {
         infile.close();
     }
 
-    // store data in static_memory vector
+    // store data in inst_labels dictionary
+
     auto dataDir = std::find(instructions.begin(), instructions.end(), ".data");
     auto textDir = std::find(instructions.begin(), instructions.end(), ".text");
     auto globlDir = std::find(instructions.begin(), instructions.end(), ".globl main");
-    
-    std::cout << std::endl;
-    // iterate through static memory lables
-    for (auto it = dataDir + 1; it != textDir - 1; it++) {
-        std::vector<std::string> staticMemTerms = split(*it, " :");
-        // staticMemTerms[0]: label
-        // staticMemTerms[1]: directive (.word, .asciiz, etc)
-        // staticMemTerms[3] ~: data to store
-    }
 
-    instructions.erase(dataDir, globlDir + 1); // erase through beginning to main
-    
-    std::cout << std::endl;
-    // store data in inst_labels dictionary
-    // reverse iterate instructions, find label, store {lable: line#} in the dictionary, and delete
-    // line # can be found std::distance(instructions.begin(), inst)
-    for (std::string inst : instructions) {
-        if (isLabel(inst) != -1) {
-            // std::cout << isLabel(inst) << inst << std::endl;
+    int lineNo = 0; // instruction line number starting at 0 (incremet of 0)
+    auto instIter = globlDir + 1;
+    while (instIter != instructions.end()) {
+        if (isLabel(*instIter) == -1){ // if this instruction is NOT a label
+            lineNo++;
+            // std::cout << lineNo << " " << *instIter << std::endl;
+            instIter++; // increase the index only when NOT a label
+        }
+        else { // if this instruction is a label
+            inst_labels[split(*instIter, ":")[0]] = lineNo;
+            instructions.erase(instIter);
         }
     }
+
+    // print all elements in the dictionary 
+    std::unordered_map<std::string, int>::iterator instLabelsItr;
+    std::cout << "\nAll Elements : \n";
+    for (instLabelsItr = inst_labels.begin(); instLabelsItr != inst_labels.end(); instLabelsItr++) {
+      std::cout << instLabelsItr -> first << " " << instLabelsItr -> second << std::endl;
+    }
+
+
+    // store data in static_memory vector
+    int staticAdress = 0; // address in static memory in bytes starting at 0 (increment of 4 bytes)
+    // iterate through static memory lables
+    for (auto staticIter = dataDir + 1; staticIter != textDir; staticIter++) {
+        std::vector<std::string> staticMemTerms = split(*staticIter, " :");
+        // staticMemTerms: { label, directive (.word, .asciiz, etc), data to store, ... }
+        static_memory_labels[staticMemTerms[0]] = staticAdress;
+
+        // iterate through elements to store
+        for (auto termIter = staticMemTerms.begin() + 2; termIter != staticMemTerms.end(); termIter++){
+            std::string term = *termIter;
+
+            if ((term.length() == 1) and isdigit(term[0])) { // if the term is numerical data, NOT label
+                static_memory.push_back(std::stoi(*termIter));
+            }
+            else { // if the term is label
+                static_memory.push_back(4 * inst_labels[term]); // push it in bytes (e.g. Line 7 would be 28)
+            }
+            staticAdress += 4;
+        }
+    }
+    
+    instructions.erase(dataDir, globlDir + 1); // erase through beginning to main
+    
+    // from here, only pure instructions are left in the vector instructions
+    
+    // print all instructions
+    std::cout << std::endl;
+    for (std::string inst : instructions) {
+        std::cout << inst << std::endl;
+    }
+
+    // print all elements in the vector
+    std::cout << "\nAll Elements in static_memory" << std::endl;
+    for (int data : static_memory) {
+        std::cout << data << std::endl;
+    }
+
+    // print all elements in the dictionary static_memory_labels
+    std::unordered_map<std::string, int>::iterator itr;
+    std::cout << "\nAll Elements in static_memory_labels: \n";
+    for (itr = static_memory_labels.begin(); itr != static_memory_labels.end(); itr++) {
+      std::cout << itr->first << " " << itr->second << std::endl;
+    }
+
+
+
     
     /** Phase 2
      * Process all static memory, output to static memory file

@@ -161,7 +161,11 @@ int main(int argc, char* argv[]) {
         std::vector<std::string> terms = split(inst, WHITESPACE+",()");
         std::string inst_type = terms[0];
 
-        if (inst_type == "add") {
+
+        //R_type instructions
+        //add encoding
+        if (inst_type == "add") 
+        {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32);
             write_binary(result,inst_outfile);
         }
@@ -202,6 +206,40 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
         }
         //sll
+        else if (inst_type == "sll")
+        {
+            //to find shamt, converts string of num to shift to dec
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 0);
+            write_binary(result, inst_outfile);
+        }
+        //srl
+        else if (inst_type == "srl")
+        {
+            //to find dec, converts string of num to shift to dec
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 2);
+            write_binary(result, inst_outfile);
+        }
+        
+        //Works of positive but not negative offsets I believe
+/*
+        //I_type instructions
+        else if (inst_type == "addi")
+        {
+            //to find dec to add, converts string term to dec
+            int result = encode_Itype(8, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
+            write_binary(result, inst_outfile);
+        }
+        else if (inst_type == "lw")
+        {
+            int result = encode_Itype(35, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
+            write_binary(result, inst_outfile);
+        }
+        else if (inst_type == "sw")
+        {
+            int result = encode_Itype(43, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
+            write_binary(result, inst_outfile);
+        }
+*/
     }
 }
 

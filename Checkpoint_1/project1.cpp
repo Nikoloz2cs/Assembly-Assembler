@@ -155,7 +155,11 @@ int main(int argc, char* argv[]) {
     /** Phase 3
      * Process all instructions, output to instruction memory file
      */
+
+    //creates counter to keep track of line number, begins at 0
     int line_Count = 0;
+
+
     for(std::string inst : instructions) {
         std::vector<std::string> terms = split(inst, WHITESPACE+",()");
         std::string inst_type = terms[0];
@@ -238,21 +242,28 @@ int main(int argc, char* argv[]) {
                 write_binary(result, inst_outfile);
             }
         }
-
-        //Works of positive but not negative offsets I believe
+        //syscall (as specified)
+        else if (inst_type == "syscall")
+        {
+            int result = encode_Rtype(0, 0, 0, 26, 0, 12);
+            write_binary(result, inst_outfile);
+        }
 
         //I_type instructions
+        //addi
         else if (inst_type == "addi")
         {
             //to find dec to add, converts string term to dec
             int result = encode_Itype(8, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
             write_binary(result, inst_outfile);
         }
+        //lw
         else if (inst_type == "lw")
         {
             int result = encode_Itype(35, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
         }
+        //sw
         else if (inst_type == "sw")
         {
             int result = encode_Itype(43, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
@@ -264,31 +275,39 @@ int main(int argc, char* argv[]) {
             //Finds offset (label - current line number -1)
             int label_ind = inst_labels[terms[3]];
             int offset = label_ind - line_Count - 1;
-            std::cout << registers[terms[1]] << std::endl;
-            std::cout << registers[terms[2]] << std::endl;
 
             int result = encode_Itype(5, registers[terms[1]], registers[terms[2]], offset);
             write_binary(result, inst_outfile);
         }
+        //beq
         else if (inst_type == "beq")
         {
             //Finds offset (label - current line number -1)
             int label_ind = inst_labels[terms[3]];
             int offset = label_ind - line_Count - 1;
-            //std::cout << registers[terms[1]] << std::endl;
-            //std::cout << registers[terms[2]] << std::endl;
 
             int result = encode_Itype(4, registers[terms[1]], registers[terms[2]], offset);
             write_binary(result, inst_outfile);
         }
+        //la (as specified)
+        else if (inst_type == "la")
+        {
+            // find adress of static memory label from static_memory_labels:
+            int label_address = static_memory_labels[terms[2]];
+            int result = encode_Itype(8, 0, registers[terms[1]], label_address);
+            write_binary(result, inst_outfile);
+        }
+
+
         //J_Type Instructions
+        //j
         else if (inst_type == "j")
         {
             int label_ind = inst_labels[terms[1]];
             int result = encode_Jtype(2, label_ind);
             write_binary(result, inst_outfile);
         }
-        //should be encoded basically same as j I beleive
+        //jal
         else if (inst_type == "jal")
         {
             int label_ind = inst_labels[terms[1]];
@@ -296,7 +315,7 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
         }
 
-
+        //Iterates to next line (for relative addressing)
         line_Count++;
     }
 }

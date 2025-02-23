@@ -149,6 +149,11 @@ int main(int argc, char* argv[]) {
      * Process all static memory, output to static memory file
      * TODO: All of this
      */
+    // std::cout << "first element in static_mem "  << static_memory[0] << std::endl;
+    for (int static_mem_code : static_memory) {
+        //std::cout << "in static the first line is: " << static_mem_code << std::endl;
+        write_binary(static_mem_code, static_outfile);
+    }
 
     /** Phase 3
      * Process all instructions, output to instruction memory file
@@ -161,7 +166,7 @@ int main(int argc, char* argv[]) {
             int result = encode_Rtype(0,registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32);
             write_binary(result, inst_outfile);
         }
-                if (inst_type == "add") {
+        if (inst_type == "add") {
             int result = encode_Rtype(0,registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32);
             write_binary(result,inst_outfile);
         }

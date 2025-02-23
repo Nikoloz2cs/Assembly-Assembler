@@ -143,8 +143,6 @@ int main(int argc, char* argv[]) {
     }
 
 
-
-    
     /** Phase 2
      * Process all static memory, output to static memory file
      */
@@ -157,11 +155,10 @@ int main(int argc, char* argv[]) {
     /** Phase 3
      * Process all instructions, output to instruction memory file
      */
+    int line_Count = 0;
     for(std::string inst : instructions) {
         std::vector<std::string> terms = split(inst, WHITESPACE+",()");
         std::string inst_type = terms[0];
-
-
         //R_type instructions
         //add encoding
         if (inst_type == "add") 
@@ -219,9 +216,31 @@ int main(int argc, char* argv[]) {
             int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 2);
             write_binary(result, inst_outfile);
         }
-        
+        //jr
+        else if (inst_type == "jr")
+        {
+            int result = encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 8);
+            write_binary(result, inst_outfile);
+        }
+        //jalr
+        else if (inst_type == "jalr")
+        {
+            //Checks if second register is provided:
+            if (terms.size() > 2)
+            {
+                int result = encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 9);
+                write_binary(result, inst_outfile);
+            }
+            //only 1 register
+            else
+            {
+                int result = encode_Rtype(0, registers[terms[1]], 0, 31, 0, 9);
+                write_binary(result, inst_outfile);
+            }
+        }
+
         //Works of positive but not negative offsets I believe
-/*
+
         //I_type instructions
         else if (inst_type == "addi")
         {
@@ -239,7 +258,46 @@ int main(int argc, char* argv[]) {
             int result = encode_Itype(43, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
         }
-*/
+        //bne
+        else if (inst_type == "bne")
+        {
+            //Finds offset (label - current line number -1)
+            int label_ind = inst_labels[terms[3]];
+            int offset = label_ind - line_Count - 1;
+            std::cout << registers[terms[1]] << std::endl;
+            std::cout << registers[terms[2]] << std::endl;
+
+            int result = encode_Itype(5, registers[terms[1]], registers[terms[2]], offset);
+            write_binary(result, inst_outfile);
+        }
+        else if (inst_type == "beq")
+        {
+            //Finds offset (label - current line number -1)
+            int label_ind = inst_labels[terms[3]];
+            int offset = label_ind - line_Count - 1;
+            //std::cout << registers[terms[1]] << std::endl;
+            //std::cout << registers[terms[2]] << std::endl;
+
+            int result = encode_Itype(4, registers[terms[1]], registers[terms[2]], offset);
+            write_binary(result, inst_outfile);
+        }
+        //J_Type Instructions
+        else if (inst_type == "j")
+        {
+            int label_ind = inst_labels[terms[1]];
+            int result = encode_Jtype(2, label_ind);
+            write_binary(result, inst_outfile);
+        }
+        //should be encoded basically same as j I beleive
+        else if (inst_type == "jal")
+        {
+            int label_ind = inst_labels[terms[1]];
+            int result = encode_Jtype(3, label_ind);
+            write_binary(result, inst_outfile);
+        }
+
+
+        line_Count++;
     }
 }
 

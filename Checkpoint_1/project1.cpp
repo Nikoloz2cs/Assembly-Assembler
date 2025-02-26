@@ -65,6 +65,8 @@ int main(int argc, char* argv[]) {
     auto globl_dir;
 
     int line_no = 0;
+    int static_address = 0; // address in static memory in bytes starting at 0 (increment of 4 bytes)
+    
     // we need to repeat n times of storing static memory data where n is the number of input instruction files
     for (int i = 1; i < argc - 2; i++) {
         data_dir = std::find(instructions.begin(), instructions.end(), ".data");
@@ -85,51 +87,50 @@ int main(int argc, char* argv[]) {
                 instructions.erase(inst_iter);
             }
         }
-    }
 
-    // print all elements in the dictionary 
-    std::unordered_map<std::string, int>::iterator inst_labels_itr;
-    std::cout << "\nAll Elements in inst_labels: \n";
-    for (inst_labels_itr = inst_labels.begin(); inst_labels_itr != inst_labels.end(); inst_labels_itr++) {
-        std::cout << inst_labels_itr -> first << " " << inst_labels_itr -> second << std::endl;
-    }
-
-
-    // store data in static_memory vector
-    int static_address = 0; // address in static memory in bytes starting at 0 (increment of 4 bytes)
-    // iterate through static memory lables
-    for (auto static_iter = data_dir + 1; static_iter != text_dir; static_iter++) {
-        std::vector<std::string> static_mem_terms = split(*static_iter, " :");
-        // static_mem_terms: { label, directive (.word, .asciiz, etc), data to store, ... }
-        static_memory_labels[static_mem_terms[0]] = static_address;
-
-        if (static_mem_terms[1] == ".word") { // if the directive is ".word"
-            // iterate through elements to store
-            for (auto term_iter = static_mem_terms.begin() + 2; term_iter != static_mem_terms.end(); term_iter++){
-                std::string term = *term_iter;
-    
-                if ((term.length() == 1) and isdigit(term[0])) { // if the term is numerical data, NOT label // term[0] (as opposed to just term) is to convert basic_string<char> to char
-                    static_memory.push_back(std::stoi(*term_iter));
-                }
-                else { // if the term is label
-                    static_memory.push_back(4 * inst_labels[term]); // push it in bytes (e.g. Line 7 would be 28)
-                }
-                static_address += 4;
-            }
+        // print all elements in the dictionary 
+        std::unordered_map<std::string, int>::iterator inst_labels_itr;
+        std::cout << "\nAll Elements in inst_labels: \n";
+        for (inst_labels_itr = inst_labels.begin(); inst_labels_itr != inst_labels.end(); inst_labels_itr++) {
+            std::cout << inst_labels_itr -> first << " " << inst_labels_itr -> second << std::endl;
         }
 
-        else if (static_mem_terms[1] == ".asciiz") { // if the directive is ".asciiz" (null-terminating string)
-            std::string static_mem_string = split(*static_iter, "\"")[1]; // this gives the first term after ", which is the string to be stored
 
-            // iterate through characters in the string
-            for (char c : static_mem_string) {
-                static_memory.push_back((int) c);
+        // store data in static_memory vector
+        // iterate through static memory lables
+        for (auto static_iter = data_dir + 1; static_iter != text_dir; static_iter++) {
+            std::vector<std::string> static_mem_terms = split(*static_iter, " :");
+            // static_mem_terms: { label, directive (.word, .asciiz, etc), data to store, ... }
+            static_memory_labels[static_mem_terms[0]] = static_address;
+
+            if (static_mem_terms[1] == ".word") { // if the directive is ".word"
+                // iterate through elements to store
+                for (auto term_iter = static_mem_terms.begin() + 2; term_iter != static_mem_terms.end(); term_iter++){
+                    std::string term = *term_iter;
+        
+                    if ((term.length() == 1) and isdigit(term[0])) { // if the term is numerical data, NOT label // term[0] (as opposed to just term) is to convert basic_string<char> to char
+                        static_memory.push_back(std::stoi(*term_iter));
+                    }
+                    else { // if the term is label
+                        static_memory.push_back(4 * inst_labels[term]); // push it in bytes (e.g. Line 7 would be 28)
+                    }
+                    static_address += 4;
+                }
             }
-            static_memory.push_back(char('\n'));
+
+            else if (static_mem_terms[1] == ".asciiz") { // if the directive is ".asciiz" (null-terminating string)
+                std::string static_mem_string = split(*static_iter, "\"")[1]; // this gives the first term after ", which is the string to be stored
+
+                // iterate through characters in the string
+                for (char c : static_mem_string) {
+                    static_memory.push_back((int) c);
+                }
+                static_memory.push_back(char('\n'));
+            }
         }
+        
+        instructions.erase(data_dir, globl_dir + 1); // erase through beginning to main
     }
-    
-    instructions.erase(data_dir, globl_dir + 1); // erase through beginning to main
     
     // from here, only pure instructions are left in the vector instructions
     

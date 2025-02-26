@@ -66,14 +66,15 @@ int main(int argc, char* argv[]) {
     int line_no = 0; // instruction line number starting at 0 (incremet of 0)
     auto inst_iter = globl_dir + 1;
     while (inst_iter != instructions.end()) {
-        if (isLabel(*inst_iter) == -1){ // if this instruction is NOT a label
+        std::string inst = *inst_iter;
+        if (isLabel(inst) == -1){ // if this instruction is NOT a label
             std::cout << line_no << " " << inst << std::endl;
             line_no++;
             line_no += padding(split(inst, " ")[0]);
             inst_iter++; // increase the index only when NOT a label
         }
         else { // if this instruction is a label
-            inst_labels[split(*inst_iter, ":")[0]] = line_no;
+            inst_labels[split(inst, ":")[0]] = line_no;
             instructions.erase(inst_iter);
         }
     }

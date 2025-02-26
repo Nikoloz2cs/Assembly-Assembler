@@ -127,5 +127,17 @@ static std::unordered_map<std::string, int> registers {
   {"$ra", 31}, {"$31", 31}
 };
 
+/**
+ * Pseudoinstruction name map
+ */
+std::unordered_map<std::string, int> pseudoinstruction = {
+    {"move", 1}, {"le", 1}, 
+    {"sge", 1}, {"sgt", 1},
+    {"sle", 1}, {"seq", 1},
+    {"sne", 1}, {"bge", 1},
+    {"bgt", 1}, {"ble", 1},
+    {"blt", 1}, {"abs", 1}
+};
+
 
 #endif

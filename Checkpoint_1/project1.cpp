@@ -60,9 +60,9 @@ int main(int argc, char* argv[]) {
     // store data in inst_labels dictionary
 
     // iterators for directives
-    auto data_dir;
-    auto text_dir;
-    auto globl_dir;
+    auto data_dir = std::find(instructions.begin(), instructions.end(), ".data");
+    auto text_dir = std::find(instructions.begin(), instructions.end(), ".text");
+    auto globl_dir = std::find(instructions.begin(), instructions.end(), ".globl main");
 
     int line_no = 0;
     int static_address = 0; // address in static memory in bytes starting at 0 (increment of 4 bytes)
@@ -73,7 +73,12 @@ int main(int argc, char* argv[]) {
         text_dir = std::find(instructions.begin(), instructions.end(), ".text");
         globl_dir = std::find(instructions.begin(), instructions.end(), ".globl main");
     
-        auto inst_iter = globl_dir + 1;
+        if (i == 1) {
+            auto inst_iter = globl_dir + 1;
+        }
+        else {
+            auto inst_iter = text_dir + 1;
+        }
         while (inst_iter != instructions.end()) {
             std::string inst = *inst_iter;
             if (isLabel(inst) == -1){ // if this instruction is NOT a label
@@ -129,9 +134,9 @@ int main(int argc, char* argv[]) {
             }
         }
         
-        instructions.erase(data_dir, text_dir + 1); // erase through beginning to main
+        instructions.erase(data_dir, text_dir + 1); // erase through .data to .text in this input instruction file
         if (i == 1) {
-            instructions.erase(0);
+            instructions.erase(instruction.begin());
         }
     }
     

@@ -202,11 +202,6 @@ int main(int argc, char* argv[]) {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 42);
             write_binary(result, inst_outfile);
         }
-        // sgt (slt in disguise)
-        else if (inst_type == "sgt") {
-            int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
-            write_binary(result, inst_outfile);
-        }
         // sll
         else if (inst_type == "sll") {
             // to find shamt, converts string of num to shift to dec
@@ -344,6 +339,20 @@ int main(int argc, char* argv[]) {
         }
 
         // PSEUDO INSTRUCTIONS
+        // move: add
+        else if (inst_type == "move") {
+            int result = encode_Rtype(0, registers[terms[2]], 0, registers[terms[1]], 0, 32);
+            write_binary(result,inst_outfile);
+        }
+        // li: addi
+        else if (inst_type == "li") {
+
+        }
+        // sgt (slt in disguise)
+        else if (inst_type == "sgt") {
+            int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            write_binary(result, inst_outfile);
+        }
         // sge
         else if (inst_type == "sge") {
 

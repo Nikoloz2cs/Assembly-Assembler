@@ -59,23 +59,31 @@ int main(int argc, char* argv[]) {
 
     // store data in inst_labels dictionary
 
-    auto data_dir = std::find(instructions.begin(), instructions.end(), ".data");
-    auto text_dir = std::find(instructions.begin(), instructions.end(), ".text");
-    auto globl_dir = std::find(instructions.begin(), instructions.end(), ".globl main");
+    // iterators for directives
+    auto data_dir;
+    auto text_dir;
+    auto globl_dir;
 
-    int line_no = 0; // instruction line number starting at 0 (incremet of 0)
-    auto inst_iter = globl_dir + 1;
-    while (inst_iter != instructions.end()) {
-        std::string inst = *inst_iter;
-        if (isLabel(inst) == -1){ // if this instruction is NOT a label
-            std::cout << line_no << " " << inst << std::endl;
-            line_no++;
-            line_no += padding(split(inst, " ")[0]);
-            inst_iter++; // increase the index only when NOT a label
-        }
-        else { // if this instruction is a label
-            inst_labels[split(inst, ":")[0]] = line_no;
-            instructions.erase(inst_iter);
+    int line_no = 0;
+    // we need to repeat n times of storing static memory data where n is the number of input instruction files
+    for (int i = 1; i < argc - 2; i++) {
+        data_dir = std::find(instructions.begin(), instructions.end(), ".data");
+        text_dir = std::find(instructions.begin(), instructions.end(), ".text");
+        globl_dir = std::find(instructions.begin(), instructions.end(), ".globl main");
+    
+        auto inst_iter = globl_dir + 1;
+        while (inst_iter != instructions.end()) {
+            std::string inst = *inst_iter;
+            if (isLabel(inst) == -1){ // if this instruction is NOT a label
+                std::cout << line_no << " " << inst << std::endl;
+                line_no++;
+                line_no += padding(split(inst, " ")[0]); // this adds the additional line_no that comes from translating pseudoinstruction
+                inst_iter++; // increase the index only when NOT a label
+            }
+            else { // if this instruction is a label
+                inst_labels[split(inst, ":")[0]] = line_no;
+                instructions.erase(inst_iter);
+            }
         }
     }
 

@@ -128,16 +128,28 @@ static std::unordered_map<std::string, int> registers {
 };
 
 /**
- * Pseudoinstruction name map
+ * Map that contains the number of lines a pseudoinstruction is translated into
  */
-std::unordered_map<std::string, int> pseudoinstruction = {
-    {"move", 1}, {"le", 1}, 
-    {"sge", 1}, {"sgt", 1},
-    {"sle", 1}, {"seq", 1},
-    {"sne", 1}, {"bge", 1},
-    {"bgt", 1}, {"ble", 1},
-    {"blt", 1}, {"abs", 1}
+std::unordered_map<std::string, int> pseudoinstruction_lineNo = {
+    {"move", 1}, {"li", 1}, 
+    {"sge", 2}, {"sgt", 1},
+    {"sle", 2}, {"seq", 3},
+    {"sne", 3}, {"bge", 2},
+    {"bgt", 2}, {"ble", 2},
+    {"blt", 2}, {"abs", 2}
 };
+
+/**
+ * returns how many number of lines it should be added as a padding for pseudoinstructions
+ */
+int padding(std::string inst){
+    if (pseudoinstruction_lineNo.find(inst) == pseudoinstruction_lineNo.end()) {
+        return 0;
+    }
+    else {
+        return pseudoinstruction_lineNo[inst] - 1;
+    }
+}
 
 
 #endif

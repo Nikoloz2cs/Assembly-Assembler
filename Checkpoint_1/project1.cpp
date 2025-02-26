@@ -67,8 +67,9 @@ int main(int argc, char* argv[]) {
     auto inst_iter = globl_dir + 1;
     while (inst_iter != instructions.end()) {
         if (isLabel(*inst_iter) == -1){ // if this instruction is NOT a label
+            std::cout << line_no << " " << inst << std::endl;
             line_no++;
-            // std::cout << line_no << " " << *inst_iter << std::endl;
+            line_no += padding(split(inst, " ")[0]);
             inst_iter++; // increase the index only when NOT a label
         }
         else { // if this instruction is a label

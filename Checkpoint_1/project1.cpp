@@ -249,6 +249,32 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
         }
 
+        //Other Real MIPS Instructions (STARS)
+        //and
+        else if (inst_type == "and")
+        {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 36);
+            write_binary(result, inst_outfile);
+        }
+        //or
+        else if (inst_type == "or")
+        {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 37);
+            write_binary(result, inst_outfile);
+        }
+        //nor
+        else if (inst_type == "nor")
+        {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 39);
+            write_binary(result, inst_outfile);
+        }
+        //xor
+        else if (inst_type == "xor")
+        {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 38);
+            write_binary(result, inst_outfile);
+        }
+
         //I_type instructions
         //addi
         else if (inst_type == "addi")
@@ -298,7 +324,30 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
         }
 
+        //andi
+        else if (inst_type == "andi")
+        {
+            int result = encode_Itype(12, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
+            write_binary(result, inst_outfile);
+        }
 
+        else if (inst_type == "ori")
+        {
+            int result = encode_Itype(13, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
+            write_binary(result, inst_outfile);
+        }
+
+        else if (inst_type == "xori")
+        {
+            int result = encode_Itype(14, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
+            write_binary(result, inst_outfile);
+        }
+
+        else if (inst_type == "lui")
+        {
+            int result = encode_Itype(15, 0, registers[terms[1]], std::stoi(terms[2]));
+            write_binary(result, inst_outfile);
+        }
         //J_Type Instructions
         //j
         else if (inst_type == "j")

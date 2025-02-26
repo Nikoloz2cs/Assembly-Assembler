@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
 
     int line_no = 0;
     int static_address = 0; // address in static memory in bytes starting at 0 (increment of 4 bytes)
-    
+
     // we need to repeat n times of storing static memory data where n is the number of input instruction files
     for (int i = 1; i < argc - 2; i++) {
         data_dir = std::find(instructions.begin(), instructions.end(), ".data");
@@ -129,7 +129,10 @@ int main(int argc, char* argv[]) {
             }
         }
         
-        instructions.erase(data_dir, globl_dir + 1); // erase through beginning to main
+        instructions.erase(data_dir, text_dir + 1); // erase through beginning to main
+        if (i == 1) {
+            instructions.erase(0);
+        }
     }
     
     // from here, only pure instructions are left in the vector instructions

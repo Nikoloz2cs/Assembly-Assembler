@@ -73,11 +73,12 @@ int main(int argc, char* argv[]) {
         text_dir = std::find(instructions.begin(), instructions.end(), ".text");
         globl_dir = std::find(instructions.begin(), instructions.end(), ".globl main");
     
+        auto inst_iter = instructions.begin();
         if (i == 1) {
-            auto inst_iter = globl_dir + 1;
+            inst_iter = globl_dir + 1;
         }
         else {
-            auto inst_iter = text_dir + 1;
+            inst_iter = text_dir + 1;
         }
         while (inst_iter != instructions.end()) {
             std::string inst = *inst_iter;
@@ -136,7 +137,7 @@ int main(int argc, char* argv[]) {
         
         instructions.erase(data_dir, text_dir + 1); // erase through .data to .text in this input instruction file
         if (i == 1) {
-            instructions.erase(instruction.begin());
+            instructions.erase(instructions.begin());
         }
     }
     
@@ -363,9 +364,10 @@ int main(int argc, char* argv[]) {
         }
         // li: addi
         else if (inst_type == "li") {
-
+            int result = encode_Itype(8, 0, registers[terms[1]], std::stoi(terms[2]));
+            write_binary(result, inst_outfile);
         }
-        // sgt (slt in disguise)
+        // sgt: slt
         else if (inst_type == "sgt") {
             int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
             write_binary(result, inst_outfile);

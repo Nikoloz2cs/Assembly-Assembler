@@ -48,15 +48,28 @@ std::string clean(const std::string &s)
 }
 
 /**
- * @param s Instruction string
- * @returns Index of ":" character if s is a label (or -1 if not) 
+ * enum class
  */
-int isLabel(const std::string &s) {
-    size_t index = s.find(":");
-    if (index == std::string::npos) {
-        return -1;
+enum class LineType {
+    DIRECTIVE,
+    LABEL,
+    INSTRUCTION
+};
+
+/**
+ * @param s Instruction string
+ * @returns LineType value that corresponds to its type (either DIRECTIVE, LABEL, INSTRUCTION)
+ */
+LineType determine_line_type(const std::string &s) {
+    size_t index = s.find(".");
+    if (index == 0) { // contains neither ":" nor "."
+        return LineType::DIRECTIVE;
     }
-    else { return index; }
+    index = s.find(":");
+    if (index == std::string::npos) { // contains no ":"
+        return LineType::INSTRUCTION;
+    }
+    return LineType::LABEL;
 }
 
 /**

@@ -174,278 +174,278 @@ int main(int argc, char* argv[]) {
         std::cout << itr->first << " " << itr->second << std::endl;
     }
 
-    // /** Phase 2
-    //  * Process all static memory, output to static memory file
-    //  */
-    // // std::cout << "first element in static_mem "  << static_memory[0] << std::endl;
-    // for (int static_mem_code : static_memory) {
-    //     // std::cout << "in static the first line is: " << static_mem_code << std::endl;
-    //     write_binary(static_mem_code, static_outfile);
-    // }
+    /** Phase 2
+     * Process all static memory, output to static memory file
+     */
+    // std::cout << "first element in static_mem "  << static_memory[0] << std::endl;
+    for (int static_mem_code : static_memory) {
+        // std::cout << "in static the first line is: " << static_mem_code << std::endl;
+        write_binary(static_mem_code, static_outfile);
+    }
 
-    // /** Phase 3
-    //  * Process all instructions, output to instruction memory file
-    //  */
+    /** Phase 3
+     * Process all instructions, output to instruction memory file
+     */
 
-    // // creates counter to keep track of line number, begins at 0
-    // int line_Count = 0;
+    // creates counter to keep track of line number, begins at 0
+    int line_Count = 0;
 
 
-    // for(std::string inst : instructions) {
-    //     std::vector<std::string> terms = split(inst, WHITESPACE+",()");
-    //     std::string inst_type = terms[0];
+    for(std::string inst : instructions) {
+        std::vector<std::string> terms = split(inst, WHITESPACE+",()");
+        std::string inst_type = terms[0];
 
-    //     // R_type instructions
-    //     // add 
-    //     if (inst_type == "add") {
-    //         int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32);
-    //         write_binary(result,inst_outfile);
-    //     }
-    //     // sub 
-    //     else if (inst_type == "sub") {
-    //         int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 34);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // mult
-    //     else if (inst_type == "mult") {
-    //         int result = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 0, 0, 24);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // div
-    //     else if (inst_type == "div") {
-    //         int result = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 0, 0, 26);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // mflo
-    //     else if (inst_type == "mflo") {
-    //         int result = encode_Rtype(0, 0, 0, registers[terms[1]], 0, 18);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // mfhi
-    //     else if (inst_type == "mfhi") {
-    //         int result = encode_Rtype(0, 0, 0, registers[terms[1]], 0, 16);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // slt
-    //     else if (inst_type == "slt") {
-    //         int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 42);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // sll
-    //     else if (inst_type == "sll") {
-    //         // to find shamt, converts string of num to shift to dec
-    //         int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 0);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // srl
-    //     else if (inst_type == "srl") {
-    //         // to find dec, converts string of num to shift to dec
-    //         int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 2);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // jr
-    //     else if (inst_type == "jr") {
-    //         int result = encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 8);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // jalr
-    //     else if (inst_type == "jalr") {
-    //         // Checks if second register is provided:
-    //         if (terms.size() > 2) {
-    //             int result = encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 9);
-    //             write_binary(result, inst_outfile);
-    //         }
-    //         // only 1 register
-    //         else {
-    //             int result = encode_Rtype(0, registers[terms[1]], 0, 31, 0, 9);
-    //             write_binary(result, inst_outfile);
-    //         }
-    //     }
-    //     // syscall (as specified)
-    //     else if (inst_type == "syscall") {
-    //         int result = encode_Rtype(0, 0, 0, 26, 0, 12);
-    //         write_binary(result, inst_outfile);
-    //     }
+        // R_type instructions
+        // add 
+        if (inst_type == "add") {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32);
+            write_binary(result,inst_outfile);
+        }
+        // sub 
+        else if (inst_type == "sub") {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 34);
+            write_binary(result, inst_outfile);
+        }
+        // mult
+        else if (inst_type == "mult") {
+            int result = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 0, 0, 24);
+            write_binary(result, inst_outfile);
+        }
+        // div
+        else if (inst_type == "div") {
+            int result = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 0, 0, 26);
+            write_binary(result, inst_outfile);
+        }
+        // mflo
+        else if (inst_type == "mflo") {
+            int result = encode_Rtype(0, 0, 0, registers[terms[1]], 0, 18);
+            write_binary(result, inst_outfile);
+        }
+        // mfhi
+        else if (inst_type == "mfhi") {
+            int result = encode_Rtype(0, 0, 0, registers[terms[1]], 0, 16);
+            write_binary(result, inst_outfile);
+        }
+        // slt
+        else if (inst_type == "slt") {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 42);
+            write_binary(result, inst_outfile);
+        }
+        // sll
+        else if (inst_type == "sll") {
+            // to find shamt, converts string of num to shift to dec
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 0);
+            write_binary(result, inst_outfile);
+        }
+        // srl
+        else if (inst_type == "srl") {
+            // to find dec, converts string of num to shift to dec
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 2);
+            write_binary(result, inst_outfile);
+        }
+        // jr
+        else if (inst_type == "jr") {
+            int result = encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 8);
+            write_binary(result, inst_outfile);
+        }
+        // jalr
+        else if (inst_type == "jalr") {
+            // Checks if second register is provided:
+            if (terms.size() > 2) {
+                int result = encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 9);
+                write_binary(result, inst_outfile);
+            }
+            // only 1 register
+            else {
+                int result = encode_Rtype(0, registers[terms[1]], 0, 31, 0, 9);
+                write_binary(result, inst_outfile);
+            }
+        }
+        // syscall (as specified)
+        else if (inst_type == "syscall") {
+            int result = encode_Rtype(0, 0, 0, 26, 0, 12);
+            write_binary(result, inst_outfile);
+        }
 
-    //     // Other Real MIPS Instructions (STARS)
-    //     // and
-    //     else if (inst_type == "and") {
-    //         int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 36);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // or
-    //     else if (inst_type == "or") {
-    //         int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 37);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // nor
-    //     else if (inst_type == "nor") {
-    //         int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 39);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // xor
-    //     else if (inst_type == "xor") {
-    //         int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 38);
-    //         write_binary(result, inst_outfile);
-    //     }
+        // Other Real MIPS Instructions (STARS)
+        // and
+        else if (inst_type == "and") {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 36);
+            write_binary(result, inst_outfile);
+        }
+        // or
+        else if (inst_type == "or") {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 37);
+            write_binary(result, inst_outfile);
+        }
+        // nor
+        else if (inst_type == "nor") {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 39);
+            write_binary(result, inst_outfile);
+        }
+        // xor
+        else if (inst_type == "xor") {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 38);
+            write_binary(result, inst_outfile);
+        }
 
-    //     // I_type instructions
-    //     // addi
-    //     else if (inst_type == "addi") {
-    //         // to find dec to add, converts string term to dec
-    //         int result = encode_Itype(8, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // lw
-    //     else if (inst_type == "lw") {
-    //         int result = encode_Itype(35, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // sw
-    //     else if (inst_type == "sw") {
-    //         int result = encode_Itype(43, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // bne
-    //     else if (inst_type == "bne") {
-    //         // Finds offset (label - current line number -1)
-    //         int label_ind = inst_labels[terms[3]];
-    //         int offset = label_ind - line_Count - 1;
+        // I_type instructions
+        // addi
+        else if (inst_type == "addi") {
+            // to find dec to add, converts string term to dec
+            int result = encode_Itype(8, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
+            write_binary(result, inst_outfile);
+        }
+        // lw
+        else if (inst_type == "lw") {
+            int result = encode_Itype(35, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
+            write_binary(result, inst_outfile);
+        }
+        // sw
+        else if (inst_type == "sw") {
+            int result = encode_Itype(43, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
+            write_binary(result, inst_outfile);
+        }
+        // bne
+        else if (inst_type == "bne") {
+            // Finds offset (label - current line number -1)
+            int label_ind = inst_labels[terms[3]];
+            int offset = label_ind - line_Count - 1;
 
-    //         int result = encode_Itype(5, registers[terms[1]], registers[terms[2]], offset);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // beq
-    //     else if (inst_type == "beq") {
-    //         // Finds offset (label - current line number -1)
-    //         int label_ind = inst_labels[terms[3]];
-    //         int offset = label_ind - line_Count - 1;
+            int result = encode_Itype(5, registers[terms[1]], registers[terms[2]], offset);
+            write_binary(result, inst_outfile);
+        }
+        // beq
+        else if (inst_type == "beq") {
+            // Finds offset (label - current line number -1)
+            int label_ind = inst_labels[terms[3]];
+            int offset = label_ind - line_Count - 1;
 
-    //         int result = encode_Itype(4, registers[terms[1]], registers[terms[2]], offset);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // la (as specified)
-    //     else if (inst_type == "la") {
-    //         // find adress of static memory label from static_memory_labels:
-    //         int label_address = static_memory_labels[terms[2]];
-    //         int result = encode_Itype(8, 0, registers[terms[1]], label_address);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // andi
-    //     else if (inst_type == "andi") {
-    //         int result = encode_Itype(12, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // ori
-    //     else if (inst_type == "ori") {
-    //         int result = encode_Itype(13, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // xori
-    //     else if (inst_type == "xori") {
-    //         int result = encode_Itype(14, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // lui
-    //     else if (inst_type == "lui")
-    //     {
-    //         int result = encode_Itype(15, 0, registers[terms[1]], std::stoi(terms[2]));
-    //         write_binary(result, inst_outfile);
-    //     }
+            int result = encode_Itype(4, registers[terms[1]], registers[terms[2]], offset);
+            write_binary(result, inst_outfile);
+        }
+        // la (as specified)
+        else if (inst_type == "la") {
+            // find adress of static memory label from static_memory_labels:
+            int label_address = static_memory_labels[terms[2]];
+            int result = encode_Itype(8, 0, registers[terms[1]], label_address);
+            write_binary(result, inst_outfile);
+        }
+        // andi
+        else if (inst_type == "andi") {
+            int result = encode_Itype(12, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
+            write_binary(result, inst_outfile);
+        }
+        // ori
+        else if (inst_type == "ori") {
+            int result = encode_Itype(13, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
+            write_binary(result, inst_outfile);
+        }
+        // xori
+        else if (inst_type == "xori") {
+            int result = encode_Itype(14, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
+            write_binary(result, inst_outfile);
+        }
+        // lui
+        else if (inst_type == "lui")
+        {
+            int result = encode_Itype(15, 0, registers[terms[1]], std::stoi(terms[2]));
+            write_binary(result, inst_outfile);
+        }
 
-    //     // J_Type Instructions
-    //     // j
-    //     else if (inst_type == "j") {
-    //         int label_ind = inst_labels[terms[1]];
-    //         int result = encode_Jtype(2, label_ind);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // jal
-    //     else if (inst_type == "jal") {
-    //         int label_ind = inst_labels[terms[1]];
-    //         int result = encode_Jtype(3, label_ind);
-    //         write_binary(result, inst_outfile);
-    //     }
+        // J_Type Instructions
+        // j
+        else if (inst_type == "j") {
+            int label_ind = inst_labels[terms[1]];
+            int result = encode_Jtype(2, label_ind);
+            write_binary(result, inst_outfile);
+        }
+        // jal
+        else if (inst_type == "jal") {
+            int label_ind = inst_labels[terms[1]];
+            int result = encode_Jtype(3, label_ind);
+            write_binary(result, inst_outfile);
+        }
 
-    //     // PSEUDO INSTRUCTIONS
-    //     // move: add
-    //     else if (inst_type == "move") {
-    //         int result = encode_Rtype(0, registers[terms[2]], 0, registers[terms[1]], 0, 32);
-    //         write_binary(result,inst_outfile);
-    //     }
-    //     // li: addi
-    //     else if (inst_type == "li") {
+        // PSEUDO INSTRUCTIONS
+        // move: add
+        else if (inst_type == "move") {
+            int result = encode_Rtype(0, registers[terms[2]], 0, registers[terms[1]], 0, 32);
+            write_binary(result,inst_outfile);
+        }
+        // li: addi
+        else if (inst_type == "li") {
 
-    //     }
-    //     // sgt (slt in disguise)
-    //     else if (inst_type == "sgt") {
-    //         int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
-    //         write_binary(result, inst_outfile);
-    //     }
-    //     // sge
-    //     else if (inst_type == "sge") {
+        }
+        // sgt (slt in disguise)
+        else if (inst_type == "sgt") {
+            int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            write_binary(result, inst_outfile);
+        }
+        // sge
+        else if (inst_type == "sge") {
 
-    //     }
-    //     // sle
-    //     else if (inst_type == "sle") {
+        }
+        // sle
+        else if (inst_type == "sle") {
 
-    //     }
-    //     // seq
-    //     else if (inst_type == "seq") {
+        }
+        // seq
+        else if (inst_type == "seq") {
 
-    //     }
-    //     // sne
-    //     else if (inst_type == "sne") {
+        }
+        // sne
+        else if (inst_type == "sne") {
 
-    //     }
+        }
 
-    //     // bge: slt -> beq 
-    //     else if (inst_type == "bge") { 
-    //         int result_slt = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 1, 0, 42); 
-    //         write_binary(result_slt, inst_outfile);
+        // bge: slt -> beq 
+        else if (inst_type == "bge") { 
+            int result_slt = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 1, 0, 42); 
+            write_binary(result_slt, inst_outfile);
 
-    //         int label_ind = inst_labels[terms[3]];
-    //         int offset = label_ind - line_Count - 1;
+            int label_ind = inst_labels[terms[3]];
+            int offset = label_ind - line_Count - 1;
 
-    //         int result_beq = encode_Itype(4, 1, 0, offset);
-    //         write_binary(result_beq, inst_outfile);
-    //     }
-    //     // bgt: slt -> bne
-    //     else if (inst_type == "bgt") {
-    //         int result_slt = encode_Rtype(0, registers[terms[2]], registers[terms[1]], 1, 0, 42); 
-    //         write_binary(result_slt, inst_outfile);
+            int result_beq = encode_Itype(4, 1, 0, offset);
+            write_binary(result_beq, inst_outfile);
+        }
+        // bgt: slt -> bne
+        else if (inst_type == "bgt") {
+            int result_slt = encode_Rtype(0, registers[terms[2]], registers[terms[1]], 1, 0, 42); 
+            write_binary(result_slt, inst_outfile);
             
-    //         int label_ind = inst_labels[terms[3]];
-    //         int offset = label_ind - line_Count - 1;
+            int label_ind = inst_labels[terms[3]];
+            int offset = label_ind - line_Count - 1;
 
-    //         int result_bne = encode_Itype(5, 1, 0, offset);
-    //         write_binary(result_bne, inst_outfile);
-    //     }
-    //     // ble: slt -> beq 
-    //     else if (inst_type == "ble") {
-    //         int result_slt = encode_Rtype(0, registers[terms[2]], registers[terms[1]], 1, 0, 42); 
-    //         write_binary(result_slt, inst_outfile);
+            int result_bne = encode_Itype(5, 1, 0, offset);
+            write_binary(result_bne, inst_outfile);
+        }
+        // ble: slt -> beq 
+        else if (inst_type == "ble") {
+            int result_slt = encode_Rtype(0, registers[terms[2]], registers[terms[1]], 1, 0, 42); 
+            write_binary(result_slt, inst_outfile);
             
-    //         int label_ind = inst_labels[terms[3]];
-    //         int offset = label_ind - line_Count - 1;
+            int label_ind = inst_labels[terms[3]];
+            int offset = label_ind - line_Count - 1;
 
-    //         int result_beq = encode_Itype(4, 1, 0, offset);
-    //         write_binary(result_beq, inst_outfile);
-    //     }
-    //     // blt: slt -> bne
-    //     else if (inst_type == "blt") {
-    //         int result_slt = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 1, 0, 42); 
-    //         write_binary(result_slt, inst_outfile);
+            int result_beq = encode_Itype(4, 1, 0, offset);
+            write_binary(result_beq, inst_outfile);
+        }
+        // blt: slt -> bne
+        else if (inst_type == "blt") {
+            int result_slt = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 1, 0, 42); 
+            write_binary(result_slt, inst_outfile);
             
-    //         int label_ind = inst_labels[terms[3]];
-    //         int offset = label_ind - line_Count - 1;
+            int label_ind = inst_labels[terms[3]];
+            int offset = label_ind - line_Count - 1;
 
-    //         int result_bne = encode_Itype(5, 1, 0, offset);
-    //         write_binary(result_bne, inst_outfile);
-    //     }
-    //     // Iterates to next line (for relative addressing)
-    //     line_Count++;
-    // }
+            int result_bne = encode_Itype(5, 1, 0, offset);
+            write_binary(result_bne, inst_outfile);
+        }
+        // Iterates to next line (for relative addressing)
+        line_Count++;
+    }
 }
 
 #endif

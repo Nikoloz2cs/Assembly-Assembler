@@ -139,7 +139,7 @@ end TCL_Generic;&#13;
     <wire from="(1900,830)" to="(1900,840)"/>
     <wire from="(1900,830)" to="(1980,830)"/>
     <wire from="(2050,620)" to="(2050,750)"/>
-    <wire from="(2110,810)" to="(2140,810)"/>
+    <wire from="(2110,810)" to="(2150,810)"/>
   </circuit>
   <circuit name="regfile">
     <a name="appearance" val="custom"/>

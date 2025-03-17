@@ -3,6 +3,7 @@
 
 #include "project1.h"
 #include <vector>
+#include <list>
 #include <iterator>
 #include <algorithm>
 #include <string>
@@ -24,9 +25,11 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> instructions;
 
     // Filled during p1
+    std::list<std::string> static_memory_raw_lines; // { raw strings for static_memory }
     std::vector<int> static_memory; // { value in decimal }
     std::unordered_map<std::string, int> static_memory_labels; // { "label_name" : byte address for static memory labels }
     std::unordered_map<std::string, int> inst_labels; // { "label_name" : line number for instruction labels }
+    std::vector<int> file_start_idx; // { iterators to the beginning of each file }
 
     /**
      * Phase 1:
@@ -37,13 +40,21 @@ int main(int argc, char* argv[]) {
      * (measured in instructions) starting at 0
     */
 
+    int line_no = 0;
+    int instruction_idx = 0;
+    LineType line_type;
+    bool skip = false; // to skip pushing within static memory parts
+    
     // For each input file:
+    file_start_idx.push_back(0);
     for (int i = 1; i < argc - 2; i++) {
         std::ifstream infile(argv[i]); //  open the input file for reading
         if (!infile) { // if file can't be opened, need to let the user know
             std::cerr << "Error: could not open file: " << argv[i] << std::endl;
             exit(1);
         }
+        
+        file_start_idx.push_back(instruction_idx);
 
         std::string str;
         while (getline(infile, str)){ // Read a line from the file
@@ -51,60 +62,57 @@ int main(int argc, char* argv[]) {
             if (str == "") { // Ignore empty lines
                 continue;
             }
-            instructions.push_back(str); // TODO This will need to change for labels
+
+            if (skip == true) { // skip all static memory parts
+                static_memory_raw_lines.push_back(str);
+                std::string dir_type = split(str, ". ")[0];
+                if ((i == 1 && dir_type == "globl") || (i != 1 && dir_type == "text")) { // stop skipping
+                    skip = false;
+                }
+                continue;
+            }
+            instruction_idx++;
             // std::cout << "instruction: " << str << std::endl;
+            
+            line_type = determine_line_type(str);
+
+            if (line_type == LineType::INSTRUCTION){
+                instructions.push_back(str);
+                line_no += determine_line_no(split(str, " ")[0]);
+                std::cout << line_no << " " << str << std::endl;
+            }
+            else if (line_type == LineType::LABEL) {
+                inst_labels[split(str, ":")[0]] = line_no;
+            }
+            else { // when line_type == LineType::DIRECTIVE
+                std::string dir_type = split(str, ".")[0];
+                if (dir_type == "data") {
+                    static_memory_raw_lines.push_back(str);
+                    skip = true;
+                }
+            }
         }
         infile.close();
     }
 
-    // store data in inst_labels dictionary
+    
+    // store data in str_labels dictionary
 
     // iterators for directives
-    auto data_dir = std::find(instructions.begin(), instructions.end(), ".data");
-    auto text_dir = std::find(instructions.begin(), instructions.end(), ".text");
-    auto globl_dir = std::find(instructions.begin(), instructions.end(), ".globl main");
+    std::list<std::string>::iterator data_dir;
+    std::list<std::string>::iterator text_dir;
 
-    int line_no = 0;
     int static_address = 0; // address in static memory in bytes starting at 0 (increment of 4 bytes)
 
-    // we need to repeat n times of storing static memory data where n is the number of input instruction files
+    std::cout << std::endl << "All static memory lines" << std::endl;
     for (int i = 1; i < argc - 2; i++) {
-        data_dir = std::find(instructions.begin(), instructions.end(), ".data");
-        text_dir = std::find(instructions.begin(), instructions.end(), ".text");
-        globl_dir = std::find(instructions.begin(), instructions.end(), ".globl main");
-    
-        auto inst_iter = instructions.begin();
-        if (i == 1) {
-            inst_iter = globl_dir + 1;
-        }
-        else {
-            inst_iter = text_dir + 1;
-        }
-        while (inst_iter != instructions.end()) {
-            std::string inst = *inst_iter;
-            if (isLabel(inst) == -1){ // if this instruction is NOT a label
-                std::cout << line_no << " " << inst << std::endl;
-                line_no++;
-                line_no += padding(split(inst, " ")[0]); // this adds the additional line_no that comes from translating pseudoinstruction
-                inst_iter++; // increase the index only when NOT a label
-            }
-            else { // if this instruction is a label
-                inst_labels[split(inst, ":")[0]] = line_no;
-                instructions.erase(inst_iter);
-            }
-        }
-
-        // print all elements in the dictionary 
-        std::unordered_map<std::string, int>::iterator inst_labels_itr;
-        std::cout << "\nAll Elements in inst_labels: \n";
-        for (inst_labels_itr = inst_labels.begin(); inst_labels_itr != inst_labels.end(); inst_labels_itr++) {
-            std::cout << inst_labels_itr -> first << " " << inst_labels_itr -> second << std::endl;
-        }
-
-
+        // for each file, find the region that has the static memory data
+        data_dir = std::find(static_memory_raw_lines.begin(), static_memory_raw_lines.end(), ".data");
+        text_dir = std::find(static_memory_raw_lines.begin(), static_memory_raw_lines.end(), ".text");
+        
         // store data in static_memory vector
-        // iterate through static memory lables
-        for (auto static_iter = data_dir + 1; static_iter != text_dir; static_iter++) {
+        for (auto static_iter = std::next(data_dir, 1); static_iter != text_dir; static_iter++) {
+            std::cout << *static_iter << std::endl;
             std::vector<std::string> static_mem_terms = split(*static_iter, " :");
             // static_mem_terms: { label, directive (.word, .asciiz, etc), data to store, ... }
             static_memory_labels[static_mem_terms[0]] = static_address;
@@ -114,7 +122,7 @@ int main(int argc, char* argv[]) {
                 for (auto term_iter = static_mem_terms.begin() + 2; term_iter != static_mem_terms.end(); term_iter++){
                     std::string term = *term_iter;
         
-                    if ((term.length() == 1) and isdigit(term[0])) { // if the term is numerical data, NOT label // term[0] (as opposed to just term) is to convert basic_string<char> to char
+                    if (isdigit(term[0])) { // if the term is numerical data, NOT label
                         static_memory.push_back(std::stoi(*term_iter));
                     }
                     else { // if the term is label
@@ -134,20 +142,23 @@ int main(int argc, char* argv[]) {
                 static_memory.push_back(char('\n'));
             }
         }
-        
-        instructions.erase(data_dir, text_dir + 1); // erase through .data to .text in this input instruction file
+
         if (i == 1) {
-            instructions.erase(instructions.begin());
+            static_memory_raw_lines.erase(data_dir, std::next(text_dir, 2)); // erase through .data to .globl for the first instruction file
+        }
+        else {
+            static_memory_raw_lines.erase(data_dir, std::next(text_dir, 1)); // erase through .data to .text
         }
     }
-    
+
     // from here, only pure instructions are left in the vector instructions
-    
+
     // print all instructions
-    std::cout << std::endl;
-    for (std::string inst : instructions) {
-        std::cout << inst << std::endl;
-    }
+    // std::cout << "\nAll Instruction lines" << std::endl;
+    // std::cout << std::endl;
+    // for (std::string inst : instructions) {
+    //     std::cout << inst << std::endl;
+    // }
 
     // print all elements in the vector
     std::cout << "\nAll Elements in static_memory" << std::endl;
@@ -161,7 +172,6 @@ int main(int argc, char* argv[]) {
     for (itr = static_memory_labels.begin(); itr != static_memory_labels.end(); itr++) {
         std::cout << itr->first << " " << itr->second << std::endl;
     }
-
 
     /** Phase 2
      * Process all static memory, output to static memory file
@@ -364,29 +374,51 @@ int main(int argc, char* argv[]) {
         }
         // li: addi
         else if (inst_type == "li") {
-            int result = encode_Itype(8, 0, registers[terms[1]], std::stoi(terms[2]));
-            write_binary(result, inst_outfile);
-        }
-        // sgt: slt
-        else if (inst_type == "sgt") {
-            int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            int result = encode_Itype(8, registers["$zero"], registers[terms[1]], std::stoi(terms[3]));
             write_binary(result, inst_outfile);
         }
         // sge
         else if (inst_type == "sge") {
+            int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 42);
+            write_binary(result, inst_outfile);
 
+            result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0xFFFFFFFF);
+            write_binary(result, inst_outfile);
+        }
+        // sgt (slt in disguise)
+        else if (inst_type == "sgt") {
+            int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            write_binary(result, inst_outfile);
         }
         // sle
         else if (inst_type == "sle") {
+            int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            write_binary(result, inst_outfile);
 
+            result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0xFFFFFFFF);
+            write_binary(result, inst_outfile);
         }
         // seq
         else if (inst_type == "seq") {
+            int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            write_binary(result, inst_outfile);
 
+            result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers["$at"], 0, 42);
+            write_binary(result, inst_outfile);
+
+            result = encode_Rtype(0, registers[terms[1]], registers["$at"], registers[terms[1]], 0, 39);
+            write_binary(result, inst_outfile);
         }
         // sne
         else if (inst_type == "sne") {
+            int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            write_binary(result, inst_outfile);
 
+            result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers["$at"], 0, 42);
+            write_binary(result, inst_outfile);
+
+            result = encode_Rtype(0, registers[terms[1]], registers["$at"], registers[terms[1]], 0, 37);
+            write_binary(result, inst_outfile);
         }
 
         // bge: slt -> beq 
@@ -432,6 +464,14 @@ int main(int argc, char* argv[]) {
 
             int result_bne = encode_Itype(5, 1, 0, offset);
             write_binary(result_bne, inst_outfile);
+        }
+        
+        esle if  (inst_type == "abs") {
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], 1, 0);
+            write_binary(result, inst_outfile);
+
+            result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], 1, 2);
+            write_binary(result, inst_outfile);
         }
         // Iterates to next line (for relative addressing)
         line_Count++;

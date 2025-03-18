@@ -1153,7 +1153,7 @@ end TCL_Generic;&#13;
       <circ-port dir="out" pin="1190,280" x="270" y="70"/>
       <circ-port dir="out" pin="1190,420" x="270" y="80"/>
       <circ-port dir="out" pin="1240,610" x="270" y="90"/>
-      <circ-port dir="out" pin="690,940" x="270" y="100"/>
+      <circ-port dir="out" pin="630,770" x="270" y="100"/>
     </appear>
     <comp lib="0" loc="(1070,620)" name="Splitter">
       <a name="appear" val="right"/>
@@ -1287,10 +1287,6 @@ end TCL_Generic;&#13;
       <a name="value" val="0x2a"/>
       <a name="width" val="6"/>
     </comp>
-    <comp lib="0" loc="(330,630)" name="Constant">
-      <a name="value" val="0x20"/>
-      <a name="width" val="6"/>
-    </comp>
     <comp lib="0" loc="(330,700)" name="Constant">
       <a name="value" val="0x22"/>
       <a name="width" val="6"/>
@@ -1316,7 +1312,7 @@ end TCL_Generic;&#13;
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,1020)" name="Constant">
-      <a name="value" val="0x0"/>
+      <a name="value" val="0x6"/>
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,1070)" name="Constant">
@@ -1324,7 +1320,7 @@ end TCL_Generic;&#13;
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,1090)" name="Constant">
-      <a name="value" val="0x0"/>
+      <a name="value" val="0x7"/>
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,1140)" name="Constant">
@@ -1332,7 +1328,7 @@ end TCL_Generic;&#13;
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,1160)" name="Constant">
-      <a name="value" val="0x0"/>
+      <a name="value" val="0x8"/>
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,650)" name="Constant">
@@ -1340,7 +1336,6 @@ end TCL_Generic;&#13;
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,670)" name="Constant">
-      <a name="value" val="0x0"/>
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,720)" name="Constant">
@@ -1348,15 +1343,15 @@ end TCL_Generic;&#13;
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,740)" name="Constant">
+      <a name="value" val="0x2"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(490,800)" name="Constant">
       <a name="value" val="0x0"/>
       <a name="width" val="4"/>
     </comp>
-    <comp lib="0" loc="(490,790)" name="Constant">
-      <a name="value" val="0x0"/>
-      <a name="width" val="4"/>
-    </comp>
-    <comp lib="0" loc="(490,810)" name="Constant">
-      <a name="value" val="0x0"/>
+    <comp lib="0" loc="(490,820)" name="Constant">
+      <a name="value" val="0x3"/>
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,860)" name="Constant">
@@ -1364,7 +1359,7 @@ end TCL_Generic;&#13;
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,880)" name="Constant">
-      <a name="value" val="0x0"/>
+      <a name="value" val="0x4"/>
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,930)" name="Constant">
@@ -1372,7 +1367,7 @@ end TCL_Generic;&#13;
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(490,950)" name="Constant">
-      <a name="value" val="0x0"/>
+      <a name="value" val="0x5"/>
       <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(510,70)" name="Constant">
@@ -1383,17 +1378,17 @@ end TCL_Generic;&#13;
       <a name="value" val="0x0"/>
       <a name="width" val="6"/>
     </comp>
+    <comp lib="0" loc="(630,770)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="reg_write_e"/>
+      <a name="output" val="true"/>
+    </comp>
     <comp lib="0" loc="(660,150)" name="Pin">
       <a name="appearance" val="NewPins"/>
     </comp>
     <comp lib="0" loc="(670,120)" name="Pin">
       <a name="appearance" val="NewPins"/>
-    </comp>
-    <comp lib="0" loc="(690,940)" name="Pin">
-      <a name="appearance" val="NewPins"/>
-      <a name="facing" val="west"/>
-      <a name="label" val="reg_write_e"/>
-      <a name="output" val="true"/>
     </comp>
     <comp lib="1" loc="(1090,300)" name="OR Gate">
       <a name="size" val="30"/>
@@ -1401,11 +1396,11 @@ end TCL_Generic;&#13;
     <comp lib="1" loc="(1100,210)" name="OR Gate">
       <a name="size" val="30"/>
     </comp>
-    <comp lib="1" loc="(650,940)" name="OR Gate">
+    <comp lib="1" loc="(590,770)" name="OR Gate">
       <a name="size" val="30"/>
     </comp>
-    <comp lib="1" loc="(680,940)" name="NOT Gate"/>
-    <comp lib="1" loc="(970,960)" name="OR Gate">
+    <comp lib="1" loc="(620,770)" name="NOT Gate"/>
+    <comp lib="1" loc="(980,960)" name="OR Gate">
       <a name="inputs" val="8"/>
       <a name="width" val="4"/>
     </comp>
@@ -1439,7 +1434,7 @@ end TCL_Generic;&#13;
     <comp lib="2" loc="(520,730)" name="Multiplexer">
       <a name="width" val="4"/>
     </comp>
-    <comp lib="2" loc="(520,800)" name="Multiplexer">
+    <comp lib="2" loc="(520,810)" name="Multiplexer">
       <a name="width" val="4"/>
     </comp>
     <comp lib="2" loc="(520,870)" name="Multiplexer">
@@ -1458,9 +1453,6 @@ end TCL_Generic;&#13;
       <a name="width" val="6"/>
     </comp>
     <comp lib="3" loc="(370,1180)" name="Comparator">
-      <a name="width" val="6"/>
-    </comp>
-    <comp lib="3" loc="(370,620)" name="Comparator">
       <a name="width" val="6"/>
     </comp>
     <comp lib="3" loc="(370,690)" name="Comparator">
@@ -1484,71 +1476,67 @@ end TCL_Generic;&#13;
     <comp lib="3" loc="(600,60)" name="Comparator">
       <a name="width" val="5"/>
     </comp>
-    <comp lib="8" loc="(332,131)" name="Text">
+    <comp lib="8" loc="(330,130)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="OP code"/>
     </comp>
-    <comp lib="8" loc="(343,764)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="mult"/>
-    </comp>
-    <comp lib="8" loc="(344,693)" name="Text">
+    <comp lib="8" loc="(340,690)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="sub"/>
     </comp>
-    <comp lib="8" loc="(344,836)" name="Text">
+    <comp lib="8" loc="(340,760)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="mult"/>
+    </comp>
+    <comp lib="8" loc="(340,835)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="div"/>
     </comp>
-    <comp lib="8" loc="(344,907)" name="Text">
+    <comp lib="8" loc="(340,905)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="mflo"/>
     </comp>
-    <comp lib="8" loc="(345,1047)" name="Text">
+    <comp lib="8" loc="(345,1045)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="sll"/>
     </comp>
-    <comp lib="8" loc="(346,1185)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="slt"/>
-    </comp>
-    <comp lib="8" loc="(346,625)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="add"/>
-    </comp>
-    <comp lib="8" loc="(346,976)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="mfhi"/>
-    </comp>
-    <comp lib="8" loc="(347,1114)" name="Text">
+    <comp lib="8" loc="(345,1110)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="srl"/>
     </comp>
-    <comp lib="8" loc="(381,269)" name="Text">
+    <comp lib="8" loc="(345,1185)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="slt"/>
+    </comp>
+    <comp lib="8" loc="(345,975)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="mfhi"/>
+    </comp>
+    <comp lib="8" loc="(380,265)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="rs"/>
     </comp>
-    <comp lib="8" loc="(381,525)" name="Text">
+    <comp lib="8" loc="(380,525)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="func"/>
     </comp>
-    <comp lib="8" loc="(388,464)" name="Text">
+    <comp lib="8" loc="(385,460)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="shamt"/>
     </comp>
-    <comp lib="8" loc="(421,369)" name="Text">
+    <comp lib="8" loc="(420,365)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="rt"/>
     </comp>
-    <comp lib="8" loc="(446,421)" name="Text">
+    <comp lib="8" loc="(445,420)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="rd"/>
     </comp>
-    <comp lib="8" loc="(596,133)" name="Text">
+    <comp lib="8" loc="(595,130)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="I-type"/>
     </comp>
-    <comp lib="8" loc="(598,165)" name="Text">
+    <comp lib="8" loc="(595,165)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="R-type"/>
     </comp>
@@ -1577,7 +1565,6 @@ end TCL_Generic;&#13;
     <wire from="(250,1030)" to="(330,1030)"/>
     <wire from="(250,1100)" to="(250,1170)"/>
     <wire from="(250,1100)" to="(330,1100)"/>
-    <wire from="(250,1170)" to="(250,1270)"/>
     <wire from="(250,1170)" to="(330,1170)"/>
     <wire from="(250,410)" to="(250,530)"/>
     <wire from="(250,530)" to="(250,680)"/>
@@ -1601,58 +1588,76 @@ end TCL_Generic;&#13;
     <wire from="(370,1180)" to="(500,1180)"/>
     <wire from="(370,180)" to="(1110,180)"/>
     <wire from="(370,180)" to="(370,370)"/>
-    <wire from="(370,620)" to="(510,620)"/>
     <wire from="(370,690)" to="(500,690)"/>
     <wire from="(370,760)" to="(500,760)"/>
-    <wire from="(370,830)" to="(500,830)"/>
+    <wire from="(370,830)" to="(470,830)"/>
     <wire from="(370,900)" to="(500,900)"/>
     <wire from="(370,970)" to="(500,970)"/>
     <wire from="(410,390)" to="(410,430)"/>
     <wire from="(410,430)" to="(800,430)"/>
+    <wire from="(470,780)" to="(470,830)"/>
+    <wire from="(470,780)" to="(560,780)"/>
+    <wire from="(470,830)" to="(500,830)"/>
     <wire from="(500,1030)" to="(500,1040)"/>
-    <wire from="(500,1040)" to="(590,1040)"/>
     <wire from="(500,1100)" to="(500,1110)"/>
-    <wire from="(500,1110)" to="(570,1110)"/>
     <wire from="(500,1170)" to="(500,1180)"/>
-    <wire from="(500,1180)" to="(700,1180)"/>
     <wire from="(500,680)" to="(500,690)"/>
     <wire from="(500,750)" to="(500,760)"/>
-    <wire from="(500,820)" to="(500,830)"/>
+    <wire from="(500,760)" to="(560,760)"/>
     <wire from="(500,890)" to="(500,900)"/>
-    <wire from="(500,900)" to="(610,900)"/>
     <wire from="(500,960)" to="(500,970)"/>
-    <wire from="(500,970)" to="(610,970)"/>
-    <wire from="(610,900)" to="(610,930)"/>
-    <wire from="(610,930)" to="(620,930)"/>
-    <wire from="(610,950)" to="(610,970)"/>
-    <wire from="(610,950)" to="(620,950)"/>
+    <wire from="(520,1010)" to="(840,1010)"/>
+    <wire from="(520,1080)" to="(850,1080)"/>
+    <wire from="(520,1150)" to="(860,1150)"/>
+    <wire from="(520,660)" to="(880,660)"/>
+    <wire from="(520,730)" to="(870,730)"/>
+    <wire from="(520,810)" to="(860,810)"/>
+    <wire from="(520,870)" to="(850,870)"/>
+    <wire from="(520,940)" to="(840,940)"/>
+    <wire from="(620,770)" to="(630,770)"/>
     <wire from="(630,270)" to="(630,380)"/>
     <wire from="(630,270)" to="(920,270)"/>
     <wire from="(660,150)" to="(980,150)"/>
     <wire from="(670,120)" to="(990,120)"/>
-    <wire from="(680,940)" to="(690,940)"/>
     <wire from="(790,530)" to="(790,550)"/>
     <wire from="(790,530)" to="(850,530)"/>
     <wire from="(800,410)" to="(800,430)"/>
     <wire from="(800,410)" to="(870,410)"/>
     <wire from="(810,470)" to="(810,490)"/>
     <wire from="(810,470)" to="(860,470)"/>
+    <wire from="(840,940)" to="(840,970)"/>
+    <wire from="(840,970)" to="(930,970)"/>
+    <wire from="(840,980)" to="(840,1010)"/>
+    <wire from="(840,980)" to="(930,980)"/>
     <wire from="(850,530)" to="(850,610)"/>
     <wire from="(850,610)" to="(1050,610)"/>
+    <wire from="(850,870)" to="(850,950)"/>
+    <wire from="(850,950)" to="(930,950)"/>
+    <wire from="(850,990)" to="(850,1080)"/>
+    <wire from="(850,990)" to="(930,990)"/>
+    <wire from="(860,1000)" to="(860,1150)"/>
+    <wire from="(860,1000)" to="(930,1000)"/>
     <wire from="(860,470)" to="(860,600)"/>
     <wire from="(860,600)" to="(1050,600)"/>
+    <wire from="(860,810)" to="(860,940)"/>
+    <wire from="(860,940)" to="(930,940)"/>
     <wire from="(870,410)" to="(1050,410)"/>
     <wire from="(870,410)" to="(870,590)"/>
     <wire from="(870,590)" to="(1050,590)"/>
+    <wire from="(870,730)" to="(870,930)"/>
+    <wire from="(870,930)" to="(930,930)"/>
+    <wire from="(880,660)" to="(880,920)"/>
+    <wire from="(880,920)" to="(930,920)"/>
     <wire from="(920,270)" to="(1110,270)"/>
     <wire from="(920,270)" to="(920,430)"/>
     <wire from="(920,430)" to="(1050,430)"/>
-    <wire from="(970,960)" to="(1120,960)"/>
+    <wire from="(970,960)" to="(980,960)"/>
     <wire from="(980,150)" to="(980,220)"/>
     <wire from="(980,220)" to="(1070,220)"/>
     <wire from="(980,220)" to="(980,310)"/>
     <wire from="(980,310)" to="(1060,310)"/>
-    <wire from="(980,310)" to="(980,940)"/>
+    <wire from="(980,310)" to="(980,840)"/>
+    <wire from="(980,960)" to="(1120,960)"/>
     <wire from="(990,120)" to="(990,200)"/>
     <wire from="(990,200)" to="(1070,200)"/>
     <wire from="(990,200)" to="(990,290)"/>
@@ -1663,6 +1668,6 @@ end TCL_Generic;&#13;
     <wire from="(990,650)" to="(1200,650)"/>
     <wire from="(990,650)" to="(990,810)"/>
     <wire from="(990,810)" to="(1120,810)"/>
-    <wire from="(990,810)" to="(990,900)"/>
+    <wire from="(990,810)" to="(990,820)"/>
   </circuit>
 </project>

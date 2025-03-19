@@ -1196,55 +1196,55 @@
       <a name="label" val="LO"/>
       <a name="width" val="32"/>
     </comp>
-    <comp lib="8" loc="(371,1119)" name="Text">
+    <comp lib="8" loc="(370,1115)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="nor"/>
     </comp>
-    <comp lib="8" loc="(371,587)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="sll"/>
-    </comp>
-    <comp lib="8" loc="(373,496)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="div"/>
-    </comp>
-    <comp lib="8" loc="(374,395)" name="Text">
+    <comp lib="8" loc="(370,395)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="mult"/>
     </comp>
-    <comp lib="8" loc="(375,676)" name="Text">
+    <comp lib="8" loc="(370,495)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="div"/>
+    </comp>
+    <comp lib="8" loc="(370,585)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="sll"/>
+    </comp>
+    <comp lib="8" loc="(375,1025)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="xor xori"/>
+    </comp>
+    <comp lib="8" loc="(375,210)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="add addi"/>
+    </comp>
+    <comp lib="8" loc="(375,305)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="sub"/>
+    </comp>
+    <comp lib="8" loc="(375,675)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="srl"/>
+    </comp>
+    <comp lib="8" loc="(375,765)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="slt"/>
     </comp>
     <comp lib="8" loc="(375,940)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="or ori"/>
     </comp>
-    <comp lib="8" loc="(376,306)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="sub"/>
-    </comp>
-    <comp lib="8" loc="(376,768)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="slt"/>
-    </comp>
-    <comp lib="8" loc="(379,1029)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="xor xori"/>
-    </comp>
-    <comp lib="8" loc="(379,213)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="add addi"/>
-    </comp>
-    <comp lib="8" loc="(384,850)" name="Text">
+    <comp lib="8" loc="(380,850)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="and andi"/>
     </comp>
-    <comp lib="8" loc="(517,335)" name="Text">
+    <comp lib="8" loc="(515,335)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="mult ALU code = 2"/>
     </comp>
-    <comp lib="8" loc="(666,336)" name="Text">
+    <comp lib="8" loc="(665,335)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="div ALU code = 3"/>
     </comp>

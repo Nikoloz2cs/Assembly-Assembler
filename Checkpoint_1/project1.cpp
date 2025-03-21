@@ -376,12 +376,12 @@ int main(int argc, char* argv[]) {
         // PSEUDO INSTRUCTIONS
         // move: add
         else if (inst_type == "move") {
-            int result = encode_Rtype(0, registers[terms[2]], 0, registers[terms[1]], 0, 32);
+            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], 0, 32);
             write_binary(result,inst_outfile);
         }
         // li: addi
         else if (inst_type == "li") {
-            int result = encode_Itype(8, registers["$zero"], registers[terms[1]], std::stoi(terms[3]));
+            int result = encode_Itype(8, registers["$zero"], registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
         }
         // sge
@@ -396,10 +396,14 @@ int main(int argc, char* argv[]) {
         else if (inst_type == "sgt") {
             int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
             write_binary(result, inst_outfile);
+            
         }
         // sle
         else if (inst_type == "sle") {
             int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
+            write_binary(result, inst_outfile);
+
+            result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0xFFFFFFFF);
             write_binary(result, inst_outfile);
         }
         // seq
@@ -408,6 +412,9 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
 
             result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers["$at"], 0, 42);
+            write_binary(result, inst_outfile);
+
+            result = encode_Rtype(0, registers[terms[1]], registers["$at"], registers[terms[1]], 0, 39);
             write_binary(result, inst_outfile);
         }
         // sne
@@ -430,7 +437,8 @@ int main(int argc, char* argv[]) {
             int label_ind = inst_labels[terms[3]];
             int offset = label_ind - line_Count - 1;
 
-            int result_beq = encode_Itype(4, 1, 0, offset);
+            // swapped $0 and $at
+            int result_beq = encode_Itype(4, 0, 1, offset);
             write_binary(result_beq, inst_outfile);
         }
         // bgt: slt -> bne
@@ -441,7 +449,7 @@ int main(int argc, char* argv[]) {
             int label_ind = inst_labels[terms[3]];
             int offset = label_ind - line_Count - 1;
 
-            int result_bne = encode_Itype(5, 1, 0, offset);
+            int result_bne = encode_Itype(5, 0, 1, offset);
             write_binary(result_bne, inst_outfile);
         }
         // ble: slt -> beq 
@@ -452,7 +460,7 @@ int main(int argc, char* argv[]) {
             int label_ind = inst_labels[terms[3]];
             int offset = label_ind - line_Count - 1;
 
-            int result_beq = encode_Itype(4, 1, 0, offset);
+            int result_beq = encode_Itype(4, 0, 1, offset);
             write_binary(result_beq, inst_outfile);
         }
         // blt: slt -> bne
@@ -463,7 +471,7 @@ int main(int argc, char* argv[]) {
             int label_ind = inst_labels[terms[3]];
             int offset = label_ind - line_Count - 1;
 
-            int result_bne = encode_Itype(5, 1, 0, offset);
+            int result_bne = encode_Itype(5, 0, 1, offset);
             write_binary(result_bne, inst_outfile);
         }
         // abs
@@ -471,7 +479,7 @@ int main(int argc, char* argv[]) {
             int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], 1, 0);
             write_binary(result, inst_outfile);
 
-            result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], 1, 2);
+            result = encode_Rtype(0, 0, registers[terms[1]], registers[terms[1]], 1, 2);
             write_binary(result, inst_outfile);
         }
         // Iterates to next line (for relative addressing)

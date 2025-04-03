@@ -144,6 +144,11 @@
       <a name="value" val="0x2"/>
       <a name="width" val="5"/>
     </comp>
+    <comp lib="0" loc="(2030,740)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="10signed"/>
+    </comp>
     <comp lib="0" loc="(2040,300)" name="Constant">
       <a name="value" val="0x2"/>
       <a name="width" val="5"/>
@@ -295,7 +300,7 @@
     <comp lib="4" loc="(980,160)" name="Register">
       <a name="appearance" val="logisim_evolution"/>
     </comp>
-    <comp lib="5" loc="(1034,997)" name="Text">
+    <comp lib="5" loc="(1030,995)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="j_reg"/>
     </comp>
@@ -335,7 +340,7 @@
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Branch"/>
     </comp>
-    <comp lib="5" loc="(406,1120)" name="Text">
+    <comp lib="5" loc="(405,1120)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="jr/jalr"/>
     </comp>
@@ -461,8 +466,10 @@
     <wire from="(190,730)" to="(190,740)"/>
     <wire from="(190,730)" to="(210,730)"/>
     <wire from="(1980,560)" to="(1980,810)"/>
-    <wire from="(2010,280)" to="(2010,800)"/>
+    <wire from="(2010,280)" to="(2010,740)"/>
     <wire from="(2010,280)" to="(2040,280)"/>
+    <wire from="(2010,740)" to="(2010,800)"/>
+    <wire from="(2010,740)" to="(2030,740)"/>
     <wire from="(2010,800)" to="(2050,800)"/>
     <wire from="(2030,330)" to="(2030,420)"/>
     <wire from="(2030,330)" to="(2150,330)"/>
@@ -1861,7 +1868,7 @@
       <circ-port dir="out" pin="1390,280" x="270" y="70"/>
       <circ-port dir="out" pin="1390,430" x="270" y="80"/>
       <circ-port dir="out" pin="1490,1660" x="270" y="120"/>
-      <circ-port dir="out" pin="1750,1050" x="270" y="110"/>
+      <circ-port dir="out" pin="1750,1040" x="270" y="110"/>
       <circ-port dir="out" pin="1750,1090" x="270" y="130"/>
       <circ-port dir="out" pin="1750,1180" x="270" y="140"/>
       <circ-port dir="out" pin="1750,1300" x="270" y="150"/>
@@ -1869,7 +1876,7 @@
       <circ-port dir="out" pin="1750,1470" x="270" y="190"/>
       <circ-port dir="out" pin="1750,1550" x="270" y="170"/>
       <circ-port dir="out" pin="1750,1620" x="270" y="180"/>
-      <circ-port dir="out" pin="1750,990" x="270" y="100"/>
+      <circ-port dir="out" pin="1880,1000" x="270" y="100"/>
     </appear>
     <comp lib="0" loc="(1090,1100)" name="Constant">
       <a name="value" val="0x2b"/>
@@ -2042,7 +2049,7 @@
       <a name="fanout" val="6"/>
       <a name="incoming" val="32"/>
     </comp>
-    <comp lib="0" loc="(1750,1050)" name="Pin">
+    <comp lib="0" loc="(1750,1040)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="imm_sel"/>
@@ -2090,7 +2097,10 @@
       <a name="label" val="J_type"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="0" loc="(1750,990)" name="Pin">
+    <comp lib="0" loc="(1800,1010)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(1880,1000)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="reg_write_e"/>
@@ -2257,6 +2267,7 @@
     <comp lib="2" loc="(1270,610)" name="Multiplexer">
       <a name="width" val="32"/>
     </comp>
+    <comp lib="2" loc="(1840,1000)" name="Multiplexer"/>
     <comp lib="2" loc="(520,1000)" name="Multiplexer">
       <a name="width" val="4"/>
     </comp>
@@ -2314,9 +2325,6 @@
     <comp lib="3" loc="(1180,490)" name="Comparator">
       <a name="width" val="6"/>
     </comp>
-    <comp lib="3" loc="(1300,1050)" name="Adder">
-      <a name="width" val="1"/>
-    </comp>
     <comp lib="3" loc="(370,1020)" name="Comparator">
       <a name="width" val="6"/>
     </comp>
@@ -2345,17 +2353,29 @@
       <a name="mode" val="unsigned"/>
       <a name="width" val="6"/>
     </comp>
+    <comp lib="5" loc="(1050,1470)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="jr op"/>
+    </comp>
     <comp lib="5" loc="(1050,1515)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="jr func"/>
     </comp>
-    <comp lib="5" loc="(1054,1472)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="jr op"/>
-    </comp>
     <comp lib="5" loc="(1075,1005)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="jalr func"/>
+    </comp>
+    <comp lib="5" loc="(1075,1360)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="func"/>
+    </comp>
+    <comp lib="5" loc="(1075,1445)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="op"/>
+    </comp>
+    <comp lib="5" loc="(1075,1485)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="func"/>
     </comp>
     <comp lib="5" loc="(1075,1585)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
@@ -2369,15 +2389,15 @@
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="jalr op"/>
     </comp>
-    <comp lib="5" loc="(1077,1445)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="op"/>
-    </comp>
-    <comp lib="5" loc="(1078,1489)" name="Text">
+    <comp lib="5" loc="(1080,1075)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="func"/>
     </comp>
-    <comp lib="5" loc="(1079,1364)" name="Text">
+    <comp lib="5" loc="(1080,1185)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="func"/>
+    </comp>
+    <comp lib="5" loc="(1080,1270)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="func"/>
     </comp>
@@ -2385,53 +2405,41 @@
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="jal op"/>
     </comp>
-    <comp lib="5" loc="(1081,1186)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="func"/>
-    </comp>
-    <comp lib="5" loc="(1082,1076)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="func"/>
-    </comp>
-    <comp lib="5" loc="(1083,1274)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="func"/>
-    </comp>
     <comp lib="5" loc="(1100,845)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="op code"/>
     </comp>
-    <comp lib="5" loc="(1109,931)" name="Text">
+    <comp lib="5" loc="(1105,930)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="op"/>
+    </comp>
+    <comp lib="5" loc="(1110,1200)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="lw"/>
+    </comp>
+    <comp lib="5" loc="(1110,1290)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="beq"/>
+    </comp>
+    <comp lib="5" loc="(1110,1385)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="bne"/>
     </comp>
     <comp lib="5" loc="(1110,1605)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="j"/>
     </comp>
-    <comp lib="5" loc="(1112,1202)" name="Text">
+    <comp lib="5" loc="(1115,1095)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="lw"/>
-    </comp>
-    <comp lib="5" loc="(1112,1294)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="beq"/>
-    </comp>
-    <comp lib="5" loc="(1114,1386)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="bne"/>
+      <a name="text" val="sw"/>
     </comp>
     <comp lib="5" loc="(1115,475)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="func"/>
     </comp>
-    <comp lib="5" loc="(1115,977)" name="Text">
+    <comp lib="5" loc="(1115,975)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="func"/>
-    </comp>
-    <comp lib="5" loc="(1117,1099)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="sw"/>
     </comp>
     <comp lib="5" loc="(1140,865)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
@@ -2441,11 +2449,11 @@
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="syscall"/>
     </comp>
-    <comp lib="5" loc="(1178,1486)" name="Text">
+    <comp lib="5" loc="(1175,1485)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="jr"/>
     </comp>
-    <comp lib="5" loc="(1208,976)" name="Text">
+    <comp lib="5" loc="(1205,975)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="jalr"/>
     </comp>
@@ -2453,15 +2461,15 @@
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="sycall"/>
     </comp>
-    <comp lib="5" loc="(1343,1015)" name="Text">
+    <comp lib="5" loc="(1340,1015)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="not mult or div"/>
     </comp>
-    <comp lib="5" loc="(1569,1075)" name="Text">
+    <comp lib="5" loc="(1565,1075)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="lw"/>
     </comp>
-    <comp lib="5" loc="(1668,959)" name="Text">
+    <comp lib="5" loc="(1665,955)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="jal/jalr/lw"/>
     </comp>
@@ -2565,7 +2573,7 @@
     <wire from="(1030,310)" to="(1070,310)"/>
     <wire from="(1030,70)" to="(1030,140)"/>
     <wire from="(1040,1040)" to="(1040,1160)"/>
-    <wire from="(1040,1040)" to="(1260,1040)"/>
+    <wire from="(1040,1040)" to="(1750,1040)"/>
     <wire from="(1040,1160)" to="(1150,1160)"/>
     <wire from="(1040,120)" to="(1040,290)"/>
     <wire from="(1040,120)" to="(1060,120)"/>
@@ -2596,7 +2604,7 @@
     <wire from="(1120,960)" to="(1130,960)"/>
     <wire from="(1130,420)" to="(1210,420)"/>
     <wire from="(1130,500)" to="(1140,500)"/>
-    <wire from="(1140,1090)" to="(1240,1090)"/>
+    <wire from="(1140,1090)" to="(1720,1090)"/>
     <wire from="(1140,1200)" to="(1150,1200)"/>
     <wire from="(1140,1290)" to="(1630,1290)"/>
     <wire from="(1140,1380)" to="(1610,1380)"/>
@@ -2621,18 +2629,13 @@
     <wire from="(1220,490)" to="(1270,490)"/>
     <wire from="(1230,140)" to="(1230,150)"/>
     <wire from="(1230,150)" to="(1270,150)"/>
-    <wire from="(1240,1060)" to="(1240,1090)"/>
-    <wire from="(1240,1060)" to="(1260,1060)"/>
-    <wire from="(1240,1090)" to="(1750,1090)"/>
     <wire from="(1240,1660)" to="(1490,1660)"/>
     <wire from="(1240,430)" to="(1390,430)"/>
     <wire from="(1240,970)" to="(1420,970)"/>
     <wire from="(1250,120)" to="(1390,120)"/>
     <wire from="(1250,630)" to="(1250,650)"/>
-    <wire from="(1260,1050)" to="(1260,1060)"/>
     <wire from="(1270,150)" to="(1270,490)"/>
     <wire from="(1270,610)" to="(1290,610)"/>
-    <wire from="(1300,1050)" to="(1750,1050)"/>
     <wire from="(140,390)" to="(170,390)"/>
     <wire from="(1410,1560)" to="(1440,1560)"/>
     <wire from="(1410,860)" to="(1410,1560)"/>
@@ -2669,8 +2672,13 @@
     <wire from="(1660,1470)" to="(1660,1620)"/>
     <wire from="(1660,1470)" to="(1750,1470)"/>
     <wire from="(1660,1620)" to="(1680,1620)"/>
+    <wire from="(1720,1020)" to="(1720,1090)"/>
+    <wire from="(1720,1020)" to="(1820,1020)"/>
+    <wire from="(1720,1090)" to="(1750,1090)"/>
     <wire from="(1730,1620)" to="(1750,1620)"/>
-    <wire from="(1740,990)" to="(1750,990)"/>
+    <wire from="(1740,990)" to="(1810,990)"/>
+    <wire from="(1800,1010)" to="(1810,1010)"/>
+    <wire from="(1840,1000)" to="(1880,1000)"/>
     <wire from="(190,360)" to="(300,360)"/>
     <wire from="(190,370)" to="(370,370)"/>
     <wire from="(190,380)" to="(630,380)"/>

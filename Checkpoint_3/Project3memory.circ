@@ -1861,7 +1861,7 @@
       <circ-port dir="out" pin="1390,280" x="270" y="70"/>
       <circ-port dir="out" pin="1390,430" x="270" y="80"/>
       <circ-port dir="out" pin="1490,1660" x="270" y="120"/>
-      <circ-port dir="out" pin="1750,1040" x="270" y="110"/>
+      <circ-port dir="out" pin="1750,1050" x="270" y="110"/>
       <circ-port dir="out" pin="1750,1090" x="270" y="130"/>
       <circ-port dir="out" pin="1750,1180" x="270" y="140"/>
       <circ-port dir="out" pin="1750,1300" x="270" y="150"/>
@@ -2042,7 +2042,7 @@
       <a name="fanout" val="6"/>
       <a name="incoming" val="32"/>
     </comp>
-    <comp lib="0" loc="(1750,1040)" name="Pin">
+    <comp lib="0" loc="(1750,1050)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="imm_sel"/>
@@ -2314,6 +2314,9 @@
     <comp lib="3" loc="(1180,490)" name="Comparator">
       <a name="width" val="6"/>
     </comp>
+    <comp lib="3" loc="(1300,1050)" name="Adder">
+      <a name="width" val="1"/>
+    </comp>
     <comp lib="3" loc="(370,1020)" name="Comparator">
       <a name="width" val="6"/>
     </comp>
@@ -2454,7 +2457,7 @@
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="not mult or div"/>
     </comp>
-    <comp lib="5" loc="(1591,1067)" name="Text">
+    <comp lib="5" loc="(1569,1075)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="lw"/>
     </comp>
@@ -2562,7 +2565,7 @@
     <wire from="(1030,310)" to="(1070,310)"/>
     <wire from="(1030,70)" to="(1030,140)"/>
     <wire from="(1040,1040)" to="(1040,1160)"/>
-    <wire from="(1040,1040)" to="(1750,1040)"/>
+    <wire from="(1040,1040)" to="(1260,1040)"/>
     <wire from="(1040,1160)" to="(1150,1160)"/>
     <wire from="(1040,120)" to="(1040,290)"/>
     <wire from="(1040,120)" to="(1060,120)"/>
@@ -2593,7 +2596,7 @@
     <wire from="(1120,960)" to="(1130,960)"/>
     <wire from="(1130,420)" to="(1210,420)"/>
     <wire from="(1130,500)" to="(1140,500)"/>
-    <wire from="(1140,1090)" to="(1750,1090)"/>
+    <wire from="(1140,1090)" to="(1240,1090)"/>
     <wire from="(1140,1200)" to="(1150,1200)"/>
     <wire from="(1140,1290)" to="(1630,1290)"/>
     <wire from="(1140,1380)" to="(1610,1380)"/>
@@ -2618,13 +2621,18 @@
     <wire from="(1220,490)" to="(1270,490)"/>
     <wire from="(1230,140)" to="(1230,150)"/>
     <wire from="(1230,150)" to="(1270,150)"/>
+    <wire from="(1240,1060)" to="(1240,1090)"/>
+    <wire from="(1240,1060)" to="(1260,1060)"/>
+    <wire from="(1240,1090)" to="(1750,1090)"/>
     <wire from="(1240,1660)" to="(1490,1660)"/>
     <wire from="(1240,430)" to="(1390,430)"/>
     <wire from="(1240,970)" to="(1420,970)"/>
     <wire from="(1250,120)" to="(1390,120)"/>
     <wire from="(1250,630)" to="(1250,650)"/>
+    <wire from="(1260,1050)" to="(1260,1060)"/>
     <wire from="(1270,150)" to="(1270,490)"/>
     <wire from="(1270,610)" to="(1290,610)"/>
+    <wire from="(1300,1050)" to="(1750,1050)"/>
     <wire from="(140,390)" to="(170,390)"/>
     <wire from="(1410,1560)" to="(1440,1560)"/>
     <wire from="(1410,860)" to="(1410,1560)"/>

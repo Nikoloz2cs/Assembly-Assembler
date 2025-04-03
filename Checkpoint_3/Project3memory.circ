@@ -2226,7 +2226,7 @@
     <comp lib="1" loc="(1730,1620)" name="OR Gate">
       <a name="inputs" val="3"/>
     </comp>
-    <comp lib="1" loc="(1740,990)" name="AND Gate"/>
+    <comp lib="1" loc="(1740,990)" name="OR Gate"/>
     <comp lib="1" loc="(590,960)" name="OR Gate">
       <a name="size" val="30"/>
     </comp>

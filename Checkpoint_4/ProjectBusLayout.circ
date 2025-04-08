@@ -490,8 +490,9 @@
       <a name="addrWidth" val="16"/>
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 16 32
-20080004 20090002 200a0019 ac0a0004 8000008 200c007d 214d0019 150a0003
-8c110004 1295820 1168fffb 800000b
+23bdf000 20100000 8e080004 20040008 100f809 8e080000 100f809 8c880000
+11000007 23bdfffc afbf0000 ac08ff00 20840004 c000007 8fbf0000 23bd0004
+3e00008 8000011
 </a>
       <a name="dataWidth" val="32"/>
     </comp>

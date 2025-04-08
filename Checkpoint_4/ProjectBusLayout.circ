@@ -98,13 +98,38 @@
     <a name="appearance" val="logisim_evolution"/>
     <a name="circuit" val="Computer"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="512.0"/>
+    <a name="simulationFrequency" val="1.0"/>
     <comp lib="0" loc="(1010,990)" name="Clock">
       <a name="facing" val="south"/>
     </comp>
     <comp lib="0" loc="(1260,310)" name="Clock"/>
     <comp lib="0" loc="(350,520)" name="Clock"/>
+    <comp lib="0" loc="(430,390)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+    </comp>
+    <comp lib="0" loc="(630,600)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+    </comp>
     <comp lib="0" loc="(720,800)" name="Clock"/>
+    <comp lib="0" loc="(980,190)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+    </comp>
+    <comp lib="0" loc="(980,220)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+    </comp>
+    <comp lib="0" loc="(980,250)" name="Probe">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="radix" val="10signed"/>
+    </comp>
     <comp lib="1" loc="(910,490)" name="Controlled Buffer">
       <a name="width" val="32"/>
     </comp>
@@ -127,6 +152,18 @@
     </comp>
     <comp lib="5" loc="(1300,350)" name="TTY"/>
     <comp lib="5" loc="(730,800)" name="Keyboard"/>
+    <comp lib="8" loc="(1040,255)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="Write_enable"/>
+    </comp>
+    <comp lib="8" loc="(1080,220)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="Address"/>
+    </comp>
+    <comp lib="8" loc="(1085,190)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="Data"/>
+    </comp>
     <comp lib="8" loc="(925,330)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Data"/>
@@ -184,12 +221,17 @@
     <wire from="(330,430)" to="(610,430)"/>
     <wire from="(330,500)" to="(350,500)"/>
     <wire from="(350,440)" to="(350,460)"/>
-    <wire from="(350,440)" to="(580,440)"/>
+    <wire from="(350,440)" to="(430,440)"/>
+    <wire from="(430,390)" to="(430,440)"/>
+    <wire from="(430,440)" to="(580,440)"/>
     <wire from="(580,440)" to="(580,520)"/>
     <wire from="(580,520)" to="(650,520)"/>
-    <wire from="(590,540)" to="(650,540)"/>
+    <wire from="(590,540)" to="(620,540)"/>
     <wire from="(610,430)" to="(610,500)"/>
     <wire from="(610,500)" to="(650,500)"/>
+    <wire from="(620,540)" to="(620,600)"/>
+    <wire from="(620,540)" to="(650,540)"/>
+    <wire from="(620,600)" to="(630,600)"/>
     <wire from="(630,820)" to="(630,940)"/>
     <wire from="(630,820)" to="(740,820)"/>
     <wire from="(630,940)" to="(660,940)"/>
@@ -233,7 +275,8 @@
     <wire from="(950,1030)" to="(950,1160)"/>
     <wire from="(950,1160)" to="(1020,1160)"/>
     <wire from="(950,1160)" to="(950,1260)"/>
-    <wire from="(950,330)" to="(950,410)"/>
+    <wire from="(950,190)" to="(950,410)"/>
+    <wire from="(950,190)" to="(980,190)"/>
     <wire from="(950,410)" to="(1020,410)"/>
     <wire from="(950,410)" to="(950,490)"/>
     <wire from="(950,490)" to="(950,660)"/>
@@ -243,7 +286,8 @@
     <wire from="(960,1070)" to="(960,1200)"/>
     <wire from="(960,1200)" to="(1020,1200)"/>
     <wire from="(960,1200)" to="(960,1240)"/>
-    <wire from="(960,310)" to="(960,390)"/>
+    <wire from="(960,220)" to="(960,390)"/>
+    <wire from="(960,220)" to="(980,220)"/>
     <wire from="(960,390)" to="(1020,390)"/>
     <wire from="(960,390)" to="(960,540)"/>
     <wire from="(960,540)" to="(960,700)"/>
@@ -253,7 +297,8 @@
     <wire from="(970,1050)" to="(970,1180)"/>
     <wire from="(970,1180)" to="(1020,1180)"/>
     <wire from="(970,1180)" to="(970,1220)"/>
-    <wire from="(970,280)" to="(970,370)"/>
+    <wire from="(970,250)" to="(970,370)"/>
+    <wire from="(970,250)" to="(980,250)"/>
     <wire from="(970,370)" to="(1020,370)"/>
     <wire from="(970,370)" to="(970,520)"/>
     <wire from="(970,520)" to="(970,670)"/>
@@ -274,11 +319,17 @@
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="220" y="61">BusWriteEnable</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="221" y="90">AddressToBus</text>
       <circ-anchor facing="east" x="270" y="40"/>
-      <circ-port dir="in" pin="260,250" x="270" y="40"/>
+      <circ-port dir="in" pin="1190,860" x="270" y="40"/>
       <circ-port dir="out" pin="2560,290" x="270" y="90"/>
       <circ-port dir="out" pin="2560,330" x="270" y="60"/>
       <circ-port dir="out" pin="2560,380" x="270" y="50"/>
     </appear>
+    <comp lib="0" loc="(1190,860)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="DataFromBus"/>
+      <a name="radix" val="16"/>
+      <a name="width" val="32"/>
+    </comp>
     <comp lib="0" loc="(1380,230)" name="Probe">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
@@ -334,7 +385,7 @@
     <comp lib="0" loc="(2030,740)" name="Probe">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
-      <a name="radix" val="10signed"/>
+      <a name="radix" val="16"/>
     </comp>
     <comp lib="0" loc="(2040,300)" name="Constant">
       <a name="value" val="0x2"/>
@@ -375,12 +426,6 @@
       <a name="facing" val="west"/>
       <a name="label" val="DataToBus"/>
       <a name="output" val="true"/>
-      <a name="radix" val="16"/>
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(260,250)" name="Pin">
-      <a name="appearance" val="NewPins"/>
-      <a name="label" val="DataFromBus"/>
       <a name="radix" val="16"/>
       <a name="width" val="32"/>
     </comp>
@@ -500,6 +545,10 @@
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="j_reg"/>
     </comp>
+    <comp lib="8" loc="(1150,895)" name="Text">
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="text" val="? is this right"/>
+    </comp>
     <comp lib="8" loc="(1200,385)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="beq"/>
@@ -523,10 +572,6 @@
     <comp lib="8" loc="(1760,995)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="beq/bne"/>
-    </comp>
-    <comp lib="8" loc="(2480,320)" name="Text">
-      <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="delete this constant 0"/>
     </comp>
     <comp lib="8" loc="(325,805)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
@@ -572,8 +617,8 @@
     <wire from="(1190,390)" to="(1230,390)"/>
     <wire from="(1190,420)" to="(1230,420)"/>
     <wire from="(1190,440)" to="(1330,440)"/>
-    <wire from="(1190,860)" to="(1190,1030)"/>
     <wire from="(1190,860)" to="(1240,860)"/>
+    <wire from="(1190,890)" to="(1190,1030)"/>
     <wire from="(1220,840)" to="(1220,930)"/>
     <wire from="(1220,840)" to="(1240,840)"/>
     <wire from="(1220,930)" to="(2050,930)"/>
@@ -769,8 +814,8 @@
       <circ-port dir="out" pin="840,250" x="50" y="100"/>
       <circ-port dir="out" pin="840,320" x="50" y="80"/>
       <circ-port dir="out" pin="840,380" x="270" y="80"/>
-      <circ-port dir="out" pin="840,460" x="50" y="130"/>
-      <circ-port dir="out" pin="840,510" x="50" y="90"/>
+      <circ-port dir="out" pin="840,460" x="50" y="60"/>
+      <circ-port dir="out" pin="840,510" x="270" y="70"/>
     </appear>
     <comp lib="0" loc="(290,210)" name="Pin">
       <a name="appearance" val="NewPins"/>
@@ -797,10 +842,6 @@
       <a name="label" val="DataFromMem"/>
       <a name="radix" val="16"/>
       <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(750,230)" name="Constant">
-      <a name="value" val="0x0"/>
-      <a name="width" val="24"/>
     </comp>
     <comp lib="0" loc="(750,270)" name="Bit Extender">
       <a name="in_width" val="26"/>
@@ -845,10 +886,6 @@
     <comp lib="1" loc="(700,360)" name="NOT Gate"/>
     <comp lib="1" loc="(760,320)" name="AND Gate"/>
     <comp lib="1" loc="(760,380)" name="AND Gate"/>
-    <comp lib="2" loc="(820,250)" name="Multiplexer">
-      <a name="selloc" val="tr"/>
-      <a name="width" val="24"/>
-    </comp>
     <comp lib="3" loc="(420,330)" name="Comparator">
       <a name="mode" val="unsigned"/>
       <a name="width" val="26"/>
@@ -875,15 +912,14 @@
     <wire from="(660,300)" to="(710,300)"/>
     <wire from="(660,360)" to="(670,360)"/>
     <wire from="(700,360)" to="(710,360)"/>
-    <wire from="(750,230)" to="(780,230)"/>
     <wire from="(750,270)" to="(780,270)"/>
     <wire from="(760,320)" to="(840,320)"/>
     <wire from="(760,380)" to="(840,380)"/>
     <wire from="(780,230)" to="(780,240)"/>
-    <wire from="(780,240)" to="(790,240)"/>
     <wire from="(780,260)" to="(780,270)"/>
-    <wire from="(780,260)" to="(790,260)"/>
+    <wire from="(780,260)" to="(820,260)"/>
     <wire from="(800,210)" to="(800,230)"/>
+    <wire from="(820,250)" to="(820,260)"/>
     <wire from="(820,250)" to="(840,250)"/>
   </circuit>
   <circuit name="KeyboardController">

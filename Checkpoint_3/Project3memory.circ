@@ -1873,8 +1873,8 @@
       <circ-port dir="out" pin="1750,1180" x="270" y="140"/>
       <circ-port dir="out" pin="1750,1300" x="270" y="150"/>
       <circ-port dir="out" pin="1750,1380" x="270" y="160"/>
-      <circ-port dir="out" pin="1750,1470" x="270" y="190"/>
-      <circ-port dir="out" pin="1750,1550" x="270" y="170"/>
+      <circ-port dir="out" pin="1750,1460" x="270" y="190"/>
+      <circ-port dir="out" pin="1750,1540" x="270" y="170"/>
       <circ-port dir="out" pin="1750,1620" x="270" y="180"/>
       <circ-port dir="out" pin="1880,1000" x="270" y="100"/>
     </appear>
@@ -2079,13 +2079,13 @@
       <a name="label" val="BNE_sel"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="0" loc="(1750,1470)" name="Pin">
+    <comp lib="0" loc="(1750,1460)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="j_reg_select"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="0" loc="(1750,1550)" name="Pin">
+    <comp lib="0" loc="(1750,1540)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="jal_select"/>
@@ -2221,12 +2221,6 @@
     <comp lib="1" loc="(1240,970)" name="AND Gate"/>
     <comp lib="1" loc="(1490,1460)" name="OR Gate"/>
     <comp lib="1" loc="(1490,1540)" name="OR Gate"/>
-    <comp lib="1" loc="(1560,1470)" name="AND Gate">
-      <a name="size" val="30"/>
-    </comp>
-    <comp lib="1" loc="(1560,1550)" name="AND Gate">
-      <a name="size" val="30"/>
-    </comp>
     <comp lib="1" loc="(1650,970)" name="OR Gate">
       <a name="inputs" val="3"/>
     </comp>
@@ -2610,7 +2604,7 @@
     <wire from="(1140,1380)" to="(1610,1380)"/>
     <wire from="(1140,1460)" to="(1160,1460)"/>
     <wire from="(1140,1500)" to="(1160,1500)"/>
-    <wire from="(1140,1600)" to="(1510,1600)"/>
+    <wire from="(1140,1600)" to="(1680,1600)"/>
     <wire from="(1170,110)" to="(1220,110)"/>
     <wire from="(1170,280)" to="(1390,280)"/>
     <wire from="(1170,860)" to="(1410,860)"/>
@@ -2645,15 +2639,8 @@
     <wire from="(1420,1520)" to="(1440,1520)"/>
     <wire from="(1420,970)" to="(1420,1440)"/>
     <wire from="(1420,970)" to="(1600,970)"/>
-    <wire from="(1490,1460)" to="(1530,1460)"/>
-    <wire from="(1490,1540)" to="(1530,1540)"/>
-    <wire from="(1510,1480)" to="(1510,1560)"/>
-    <wire from="(1510,1480)" to="(1530,1480)"/>
-    <wire from="(1510,1560)" to="(1510,1600)"/>
-    <wire from="(1510,1560)" to="(1530,1560)"/>
-    <wire from="(1510,1600)" to="(1680,1600)"/>
-    <wire from="(1560,1470)" to="(1660,1470)"/>
-    <wire from="(1560,1550)" to="(1640,1550)"/>
+    <wire from="(1490,1460)" to="(1660,1460)"/>
+    <wire from="(1490,1540)" to="(1640,1540)"/>
     <wire from="(1580,1180)" to="(1750,1180)"/>
     <wire from="(1580,860)" to="(1580,950)"/>
     <wire from="(1580,950)" to="(1600,950)"/>
@@ -2662,15 +2649,15 @@
     <wire from="(1610,1310)" to="(1610,1380)"/>
     <wire from="(1610,1310)" to="(1630,1310)"/>
     <wire from="(1610,1380)" to="(1750,1380)"/>
-    <wire from="(1640,1550)" to="(1640,1640)"/>
-    <wire from="(1640,1550)" to="(1750,1550)"/>
+    <wire from="(1640,1540)" to="(1640,1640)"/>
+    <wire from="(1640,1540)" to="(1750,1540)"/>
     <wire from="(1640,1640)" to="(1680,1640)"/>
     <wire from="(1650,970)" to="(1690,970)"/>
     <wire from="(1660,1010)" to="(1660,1020)"/>
     <wire from="(1660,1010)" to="(1690,1010)"/>
     <wire from="(1660,1300)" to="(1750,1300)"/>
-    <wire from="(1660,1470)" to="(1660,1620)"/>
-    <wire from="(1660,1470)" to="(1750,1470)"/>
+    <wire from="(1660,1460)" to="(1660,1620)"/>
+    <wire from="(1660,1460)" to="(1750,1460)"/>
     <wire from="(1660,1620)" to="(1680,1620)"/>
     <wire from="(1720,1020)" to="(1720,1090)"/>
     <wire from="(1720,1020)" to="(1820,1020)"/>

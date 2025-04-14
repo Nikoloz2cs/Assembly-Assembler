@@ -5,4 +5,4 @@
 Testcases/**
 *.py
 *.docx
-.DS_Store
+*.DS_Store

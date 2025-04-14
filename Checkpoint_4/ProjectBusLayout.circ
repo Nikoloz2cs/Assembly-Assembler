@@ -98,7 +98,7 @@
     <a name="appearance" val="logisim_evolution"/>
     <a name="circuit" val="Computer"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="2000.0"/>
+    <a name="simulationFrequency" val="1.0"/>
     <comp lib="0" loc="(1010,990)" name="Clock">
       <a name="facing" val="south"/>
     </comp>
@@ -155,6 +155,7 @@
       <a name="height" val="256"/>
       <a name="width" val="256"/>
     </comp>
+    <comp lib="5" loc="(1260,1280)" name="LED"/>
     <comp lib="5" loc="(1300,350)" name="TTY"/>
     <comp lib="5" loc="(730,800)" name="Keyboard"/>
     <comp lib="8" loc="(1040,255)" name="Text">
@@ -183,6 +184,7 @@
     </comp>
     <comp loc="(1240,1030)" name="RGBController"/>
     <comp loc="(1240,1160)" name="BuzzerController"/>
+    <comp loc="(1240,1280)" name="LEDController"/>
     <comp loc="(1240,370)" name="TerminalController"/>
     <comp loc="(870,480)" name="MemoryController"/>
     <comp loc="(870,650)" name="CPU"/>
@@ -205,6 +207,7 @@
     <wire from="(1240,1160)" to="(1270,1160)"/>
     <wire from="(1240,1180)" to="(1270,1180)"/>
     <wire from="(1240,1200)" to="(1250,1200)"/>
+    <wire from="(1240,1280)" to="(1260,1280)"/>
     <wire from="(1240,370)" to="(1310,370)"/>
     <wire from="(1240,390)" to="(1260,390)"/>
     <wire from="(1250,1170)" to="(1250,1200)"/>
@@ -280,7 +283,9 @@
     <wire from="(950,1030)" to="(1020,1030)"/>
     <wire from="(950,1030)" to="(950,1160)"/>
     <wire from="(950,1160)" to="(1020,1160)"/>
-    <wire from="(950,1160)" to="(950,1260)"/>
+    <wire from="(950,1160)" to="(950,1280)"/>
+    <wire from="(950,1280)" to="(1020,1280)"/>
+    <wire from="(950,1280)" to="(950,1420)"/>
     <wire from="(950,190)" to="(950,410)"/>
     <wire from="(950,190)" to="(980,190)"/>
     <wire from="(950,410)" to="(1020,410)"/>
@@ -291,7 +296,9 @@
     <wire from="(960,1070)" to="(1020,1070)"/>
     <wire from="(960,1070)" to="(960,1200)"/>
     <wire from="(960,1200)" to="(1020,1200)"/>
-    <wire from="(960,1200)" to="(960,1240)"/>
+    <wire from="(960,1200)" to="(960,1320)"/>
+    <wire from="(960,1320)" to="(1020,1320)"/>
+    <wire from="(960,1320)" to="(960,1400)"/>
     <wire from="(960,220)" to="(960,390)"/>
     <wire from="(960,220)" to="(980,220)"/>
     <wire from="(960,390)" to="(1020,390)"/>
@@ -302,7 +309,9 @@
     <wire from="(970,1050)" to="(1020,1050)"/>
     <wire from="(970,1050)" to="(970,1180)"/>
     <wire from="(970,1180)" to="(1020,1180)"/>
-    <wire from="(970,1180)" to="(970,1220)"/>
+    <wire from="(970,1180)" to="(970,1300)"/>
+    <wire from="(970,1300)" to="(1020,1300)"/>
+    <wire from="(970,1300)" to="(970,1380)"/>
     <wire from="(970,250)" to="(970,370)"/>
     <wire from="(970,250)" to="(980,250)"/>
     <wire from="(970,370)" to="(1020,370)"/>
@@ -1573,37 +1582,47 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
     <wire from="(630,590)" to="(630,640)"/>
     <wire from="(630,640)" to="(650,640)"/>
   </circuit>
-  <circuit name="div">
+  <circuit name="LEDController">
     <a name="appearance" val="logisim_evolution"/>
-    <a name="circuit" val="div"/>
+    <a name="circuit" val="LEDController"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
-    <comp lib="0" loc="(360,510)" name="Pin">
+    <comp lib="0" loc="(250,130)" name="Pin">
       <a name="appearance" val="NewPins"/>
+      <a name="label" val="DataFromBus"/>
       <a name="radix" val="16"/>
-      <a name="width" val="4"/>
+      <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(360,530)" name="Pin">
+    <comp lib="0" loc="(260,260)" name="Pin">
       <a name="appearance" val="NewPins"/>
+      <a name="label" val="AddressFromBus"/>
       <a name="radix" val="16"/>
-      <a name="width" val="4"/>
+      <a name="width" val="26"/>
     </comp>
-    <comp lib="0" loc="(400,520)" name="Pin">
+    <comp lib="0" loc="(270,210)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="WriteEnableFromBus"/>
+    </comp>
+    <comp lib="0" loc="(270,280)" name="Constant">
+      <a name="value" val="0x3ffff30"/>
+      <a name="width" val="26"/>
+    </comp>
+    <comp lib="0" loc="(470,230)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
+      <a name="label" val="LED_we"/>
       <a name="output" val="true"/>
-      <a name="width" val="4"/>
     </comp>
-    <comp lib="0" loc="(400,570)" name="Pin">
-      <a name="appearance" val="NewPins"/>
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="4"/>
+    <comp lib="1" loc="(420,230)" name="AND Gate"/>
+    <comp lib="3" loc="(320,270)" name="Comparator">
+      <a name="width" val="26"/>
     </comp>
-    <comp lib="3" loc="(400,520)" name="Divider">
-      <a name="width" val="4"/>
-    </comp>
-    <wire from="(380,540)" to="(380,570)"/>
-    <wire from="(380,570)" to="(400,570)"/>
+    <wire from="(260,260)" to="(280,260)"/>
+    <wire from="(270,210)" to="(370,210)"/>
+    <wire from="(270,280)" to="(280,280)"/>
+    <wire from="(320,270)" to="(360,270)"/>
+    <wire from="(360,250)" to="(360,270)"/>
+    <wire from="(360,250)" to="(370,250)"/>
+    <wire from="(420,230)" to="(470,230)"/>
   </circuit>
 </project>

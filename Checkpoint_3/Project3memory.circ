@@ -292,15 +292,7 @@
       <a name="addrWidth" val="16"/>
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 16 32
-201df000 23bdffd0 200800ff 84a00 85400 200b007f b6200 b6c00
-afaa0000 14cc020 afb80004 149c020 afb80008 1a9c020 afb8000c afa90010
-169c020 afb80014 109c020 afb80018 10cc020 afb8001c afa80020 10dc020
-afb80024 10ac020 afb80028 16ac020 afb8002c 20100000 20110000 20120000
-8c08ff10 11000017 8c08ff14 20090077 15090003 12200012 2231ffff 8000038
-20090061 15090003 1200000d 2210ffff 8000038 20090073 15090004 200a00ff
-122a0007 22310001 8000038 20090064 15090003 200a00ff 120a0001 22100001
-ac00ff10 22520001 2008000c 248001a 9010 124080 11d4020 8d080000
-ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
+8d110004 8d120008 200a0004 8d530008
 </a>
       <a name="dataWidth" val="32"/>
     </comp>
@@ -1942,7 +1934,7 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
       <a name="width" val="6"/>
     </comp>
     <comp lib="0" loc="(1090,1510)" name="Constant">
-      <a name="value" val="0x9"/>
+      <a name="value" val="0x8"/>
       <a name="width" val="6"/>
     </comp>
     <comp lib="0" loc="(1090,1610)" name="Constant">
@@ -2018,6 +2010,10 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
       <a name="value" val="0x0"/>
       <a name="width" val="32"/>
     </comp>
+    <comp lib="0" loc="(1310,440)" name="Constant">
+      <a name="value" val="0x1f"/>
+      <a name="width" val="5"/>
+    </comp>
     <comp lib="0" loc="(1340,620)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
@@ -2049,7 +2045,6 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
     </comp>
     <comp lib="0" loc="(140,390)" name="Pin">
       <a name="appearance" val="NewPins"/>
-      <a name="initial" val="0x201df000"/>
       <a name="label" val="Inst"/>
       <a name="radix" val="16"/>
       <a name="width" val="32"/>
@@ -2337,6 +2332,9 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
     <comp lib="2" loc="(1330,620)" name="Multiplexer">
       <a name="width" val="32"/>
     </comp>
+    <comp lib="2" loc="(1350,430)" name="Multiplexer">
+      <a name="width" val="5"/>
+    </comp>
     <comp lib="2" loc="(1360,130)" name="Multiplexer">
       <a name="width" val="5"/>
     </comp>
@@ -2546,7 +2544,7 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="not mult or div"/>
     </comp>
-    <comp lib="5" loc="(1471,179)" name="Text">
+    <comp lib="5" loc="(1470,175)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="srl/sll AND NOT immediate"/>
     </comp>
@@ -2723,10 +2721,12 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
     <wire from="(1230,140)" to="(1230,150)"/>
     <wire from="(1230,150)" to="(1270,150)"/>
     <wire from="(1240,1660)" to="(1490,1660)"/>
-    <wire from="(1240,430)" to="(1390,430)"/>
+    <wire from="(1240,430)" to="(1260,430)"/>
     <wire from="(1240,970)" to="(1420,970)"/>
     <wire from="(1250,120)" to="(1290,120)"/>
     <wire from="(1250,630)" to="(1250,650)"/>
+    <wire from="(1260,420)" to="(1260,430)"/>
+    <wire from="(1260,420)" to="(1320,420)"/>
     <wire from="(1270,150)" to="(1270,490)"/>
     <wire from="(1270,610)" to="(1300,610)"/>
     <wire from="(1280,630)" to="(1280,680)"/>
@@ -2737,12 +2737,16 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
     <wire from="(1310,140)" to="(1310,280)"/>
     <wire from="(1310,140)" to="(1330,140)"/>
     <wire from="(1310,280)" to="(1330,280)"/>
+    <wire from="(1310,440)" to="(1320,440)"/>
     <wire from="(1310,640)" to="(1310,680)"/>
     <wire from="(1310,680)" to="(1320,680)"/>
+    <wire from="(1330,450)" to="(1330,490)"/>
+    <wire from="(1330,490)" to="(1480,490)"/>
     <wire from="(1330,620)" to="(1340,620)"/>
     <wire from="(1340,150)" to="(1340,210)"/>
     <wire from="(1340,210)" to="(1340,270)"/>
     <wire from="(1340,210)" to="(1350,210)"/>
+    <wire from="(1350,430)" to="(1390,430)"/>
     <wire from="(1350,670)" to="(1400,670)"/>
     <wire from="(1350,690)" to="(1360,690)"/>
     <wire from="(1360,130)" to="(1390,130)"/>
@@ -2754,7 +2758,7 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
     <wire from="(140,390)" to="(170,390)"/>
     <wire from="(1410,1560)" to="(1440,1560)"/>
     <wire from="(1410,860)" to="(1410,1560)"/>
-    <wire from="(1410,860)" to="(1580,860)"/>
+    <wire from="(1410,860)" to="(1480,860)"/>
     <wire from="(1420,1440)" to="(1420,1520)"/>
     <wire from="(1420,1440)" to="(1440,1440)"/>
     <wire from="(1420,1520)" to="(1440,1520)"/>
@@ -2762,6 +2766,8 @@ ac10ff20 ac11ff24 ac08ff28 ac00ff2c 8000020
     <wire from="(1420,970)" to="(1600,970)"/>
     <wire from="(1430,670)" to="(1500,670)"/>
     <wire from="(1460,200)" to="(1500,200)"/>
+    <wire from="(1480,490)" to="(1480,860)"/>
+    <wire from="(1480,860)" to="(1580,860)"/>
     <wire from="(1490,1460)" to="(1660,1460)"/>
     <wire from="(1490,1540)" to="(1640,1540)"/>
     <wire from="(1500,200)" to="(1500,520)"/>

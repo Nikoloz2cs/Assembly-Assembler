@@ -17,6 +17,9 @@ main:
     # LED address 
     addi $t9, $0, -208
 
+    # 1 for turning on the LED
+    addi $t0, $0, 1
+
 main_loop:
     # First 'S' (...)
     jal dot

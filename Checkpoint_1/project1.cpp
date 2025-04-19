@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> instructions;
 
     // Filled during p1
-    std::list<std::string> static_memory_raw_lines; // { raw strings for static_memory }
+    std::list<std::string> static_memory_lines; // { raw strings for static_memory }
     std::vector<int> static_memory; // { value in decimal }
     std::unordered_map<std::string, int> static_memory_labels; // { "label_name" : byte address for static memory labels }
     std::unordered_map<std::string, int> inst_labels; // { "label_name" : line number for instruction labels }
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
     int line_no = 0;
     int instruction_idx = 0;
     LineType line_type;
-    bool skip = false; // to skip pushing within static memory parts
+    bool static_memory_input_loop = false; // once spot ".data" directive, start pushing static_memory_lines vector
     
     // For each input file:
     file_start_idx.push_back(0);
@@ -64,12 +64,12 @@ int main(int argc, char* argv[]) {
                 continue;
             }
 
-            if (skip == true) { // skip all static memory parts
-                static_memory_raw_lines.push_back(str);
-                std::string dir_type = split(str, ". ")[0];
-                if ((i == 1 && dir_type == "globl") || (i != 1 && dir_type == "text")) { // stop skipping
-                    skip = false;
+            if (static_memory_input_loop == true) {
+                if (determine_line_type(str) == LineType::DIRECTIVE) { // stop pushing static memory lines once a new directive is spotted
+                    static_memory_input_loop = false;
+                    continue;
                 }
+                static_memory_lines.push_back(str);
                 continue;
             }
             instruction_idx++;
@@ -90,9 +90,9 @@ int main(int argc, char* argv[]) {
             else { // when line_type == LineType::DIRECTIVE
                 std::string dir_type = split(str, ".")[0];
                 if (dir_type == "data") {
-                    static_memory_raw_lines.push_back(str);
-                    skip = true;
+                    static_memory_input_loop = true;
                 }
+                // implement other directive handlings
             }
         }
         infile.close();
@@ -107,50 +107,36 @@ int main(int argc, char* argv[]) {
     int static_address = 0; // address in static memory in bytes starting at 0 (increment of 4 bytes)
 
     std::cout << std::endl << "All static memory lines----------" << std::endl;
-    for (int i = 1; i < argc - 2; i++) {
-        // for each file, find the region that has the static memory data
-        data_dir = std::find(static_memory_raw_lines.begin(), static_memory_raw_lines.end(), ".data");
-        text_dir = std::find(static_memory_raw_lines.begin(), static_memory_raw_lines.end(), ".text");
-        
-        // store data in static_memory vector
-        for (auto static_iter = std::next(data_dir, 1); static_iter != text_dir; static_iter++) {
-            std::cout << *static_iter << std::endl;
-            std::vector<std::string> static_mem_terms = split(*static_iter, " :");
-            // static_mem_terms: { label, directive (.word, .asciiz, etc), data to store, ... }
-            static_memory_labels[static_mem_terms[0]] = static_address;
+    // store data in static_memory vector
+    for (std::string static_memory_line: static_memory_lines) {
+        std::cout << static_memory_line << std::endl;
+        std::vector<std::string> static_mem_terms = split(static_memory_line, " :");
+        // static_mem_terms: { label, directive (.word, .asciiz, etc), data to store, ... }
+        static_memory_labels[static_mem_terms[0]] = static_address;
 
-            if (static_mem_terms[1] == ".word") { // if the directive is ".word"
-                // iterate through elements to store
-                for (auto term_iter = static_mem_terms.begin() + 2; term_iter != static_mem_terms.end(); term_iter++){
-                    std::string term = *term_iter;
-        
-                    if (isdigit(term[0])) { // if the term is numerical data, NOT label
-                        static_memory.push_back(std::stoi(*term_iter));
-                    }
-                    else { // if the term is label
-                        static_memory.push_back(4 * inst_labels[term]); // push it in bytes (e.g. Line 7 would be 28)
-                    }
-                    static_address += 4;
+        if (static_mem_terms[1] == ".word") { // if the directive is ".word"
+            // iterate through elements to store
+            for (auto term_iter = static_mem_terms.begin() + 2; term_iter != static_mem_terms.end(); term_iter++){
+                std::string term = *term_iter;
+    
+                if (isdigit(term[0])) { // if the term is numerical data, NOT label
+                    static_memory.push_back(std::stoi(*term_iter));
                 }
-            }
-
-            else if (static_mem_terms[1] == ".asciiz") { // if the directive is ".asciiz" (null-terminating string)
-                std::string static_mem_string = split(*static_iter, "\"")[1]; // this gives the first term after ", which is the string to be stored
-
-                // iterate through characters in the string
-                for (char c : static_mem_string) {
-                    static_memory.push_back((int) c);
+                else { // if the term is label
+                    static_memory.push_back(4 * inst_labels[term]); // push it in bytes (e.g. Line 7 would be 28)
                 }
-                static_memory.push_back(char('\n'));
+                static_address += 4;
             }
         }
 
-        // erase all lines that are already processed
-        if (i == 1) {
-            static_memory_raw_lines.erase(data_dir, std::next(text_dir, 2)); // erase through .data to .globl for the first instruction file
-        }
-        else {
-            static_memory_raw_lines.erase(data_dir, std::next(text_dir, 1)); // erase through .data to .text
+        else if (static_mem_terms[1] == ".asciiz") { // if the directive is ".asciiz" (null-terminating string)
+            std::string static_mem_string = split(static_memory_line, "\"")[1]; // this gives the first term after ", which is the string to be stored
+
+            // iterate through characters in the string
+            for (char c : static_mem_string) {
+                static_memory.push_back((int) c);
+            }
+            static_memory.push_back(char('\n'));
         }
     }
 
@@ -252,7 +238,8 @@ int main(int argc, char* argv[]) {
         }
         // jr
         else if (inst_type == "jr") {
-            int result = encode_Rtype(0, registers[terms[1]], 0, registers[terms[2]], 0, 8);
+            // std::cout << "here" << registers[terms[2]]; 
+            int result = encode_Rtype(0, registers[terms[1]], 0, 0, 0, 8);
             write_binary(result, inst_outfile);
         }
         // jalr

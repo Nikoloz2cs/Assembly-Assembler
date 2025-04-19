@@ -62,7 +62,7 @@ enum class LineType {
  */
 LineType determine_line_type(const std::string &s) {
     size_t index = s.find(".");
-    if (index == 0) { // contains neither ":" nor "."
+    if (index == 0) { // contains "."
         return LineType::DIRECTIVE;
     }
     index = s.find(":");

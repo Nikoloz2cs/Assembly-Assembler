@@ -40,19 +40,42 @@ _syscall1:
     sw $t0, -256($0)                        # if negative, print "-" first
     addi $t1, $0, 10                        # for a base of 10 (will print integer in decimal)
 _syscall1Check0:
-    bne $a0, $0, _syscallLoop               # if $a0 != 0, go to _syscall1Loop
+    bne $a0, $0, _syscall1Positive          # if $a0 != 0, go to _syscall1Loop
     addi $t0, $0, 0
     sw $t0, -256($0)                        # print 0
     j _syscall1Done
-_syscall1Loop:                              # as long as $a0 != 0
-    beq $a0, $0, _syscall1Done              # if $a0 == 0, go to _syscall1Done
-    div $a0, $t1                            # hi = $a0 // 10, lo = $a0 % 10
-    mfhi $a0
+_syscall1Positive:
+    # print out 10000th digit
+    addi $t0, $0, 10000
+    div $a0, $t0
+    mfhi $t0
+    sw $t0, -256($0)
+    
+    # print out 1000th digit
+    addi $t0, $0, 1000
+    div $a0, $t0
+    mfhi $t0
+    sw $t0, -256($0)
+    
+    # print out 100th digit
+    addi $t0, $0, 100
+    div $a0, $t0
+    mfhi $t0
+    sw $t0, -256($0)
+    
+    # print out 10th digit
+    addi $t0, $0, 10
+    div $a0, $t0
+    mfhi $t0
+    sw $t0, -256($0)
+
+    # print out 1st digit
+    addi $t0, $0, 10
+    div $a0, $t0
     mflo $t0
-    sw $t0, -256($0)                        # print the number
-    j _syscall1Loop
-_syscall1Done:
-    jr $k0                                  # OH CRAP I am print the number backwards lol ==> Need to change
+    sw $t0, -256($0)
+
+    jr $k0
 
 #Read Integer
 # load ASCII codes to $v0
@@ -84,7 +107,7 @@ _syscall9:
     addi $t0, $0, 4
     mult $a0, $t0
     mflo $t1
-    addi $v0, $v0, $t1      # $v0 = _END_OF_STATIC_MEMORY_ + 4 * $a0
+    add $v0, $v0, $t1      # $v0 = _END_OF_STATIC_MEMORY_ + 4 * $a0
     jr $k0
 
 #"End" the program

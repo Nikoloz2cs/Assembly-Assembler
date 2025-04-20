@@ -98,11 +98,7 @@ int main(int argc, char* argv[]) {
         infile.close();
     }
     
-    // store data in str_labels dictionary
-
-    // iterators for directives
-    std::list<std::string>::iterator data_dir;
-    std::list<std::string>::iterator text_dir;
+    // store data in static_memory_labels dictionary
 
     int static_address = 0; // address in static memory in bytes starting at 0 (increment of 4 bytes)
 
@@ -140,9 +136,13 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    // manually adding _END_OF_STATIC_MEMORY_
+    static_memory_labels["_END_OF_STATIC_MEMORY_"] = static_address;
+    static_memory.push_back(static_address + 4);
+    static_address += 4;
+
 
     // from here, only pure instructions are left in the vector instructions
-
 
     // print all instructions
     std::cout << "\nAll Instruction lines----------" << std::endl;

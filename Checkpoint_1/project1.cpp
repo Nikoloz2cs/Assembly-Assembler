@@ -257,7 +257,7 @@ int main(int argc, char* argv[]) {
         }
         // syscall (as specified)
         else if (inst_type == "syscall") {
-            int result = encode_Rtype(0, 0, 0, 26, 0, 12);
+            int result = encode_Rtype(0, 0, 0, 26, 0, 9);
             write_binary(result, inst_outfile);
         }
 

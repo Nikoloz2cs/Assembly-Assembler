@@ -156,13 +156,18 @@ int main(int argc, char* argv[]) {
         std::cout << data << std::endl;
     }
 
-    // print all elements in the dictionary static_memory_labels
+    // print all elements in the dictionary inst_labels
     std::unordered_map<std::string, int>::iterator itr;
+    std::cout << "\nAll Elements in inst_labels----------" << std::endl;;
+    for (itr = inst_labels.begin(); itr != inst_labels.end(); itr++) {
+        std::cout << itr->first << " " << itr->second << std::endl;
+    }
+
+    // print all elements in the dictionary static_memory_labels
     std::cout << "\nAll Elements in static_memory_labels----------" << std::endl;;
     for (itr = static_memory_labels.begin(); itr != static_memory_labels.end(); itr++) {
         std::cout << itr->first << " " << itr->second << std::endl;
     }
-
     
 
     /** Phase 2

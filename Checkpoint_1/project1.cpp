@@ -441,7 +441,7 @@ int main(int argc, char* argv[]) {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 42);
             write_binary(result, inst_outfile);
 
-            result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0xFFFFFFFF);
+            result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0x1);
             write_binary(result, inst_outfile);
 
             line_Count += determine_line_no("sge");
@@ -458,7 +458,7 @@ int main(int argc, char* argv[]) {
             int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
             write_binary(result, inst_outfile);
 
-            result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0xFFFFFFFF);
+            result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0x1);
             write_binary(result, inst_outfile);
             
             line_Count += determine_line_no("sle");
@@ -471,7 +471,10 @@ int main(int argc, char* argv[]) {
             result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers["$at"], 0, 42);
             write_binary(result, inst_outfile);
 
-            result = encode_Rtype(0, registers[terms[1]], registers["$at"], registers[terms[1]], 0, 39);
+            result = encode_Rtype(0, registers[terms[1]], registers["$at"], registers[terms[1]], 0, 37);
+            write_binary(result, inst_outfile);
+
+            result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0x1);
             write_binary(result, inst_outfile);
 
             line_Count += determine_line_no("seq");
@@ -552,6 +555,13 @@ int main(int argc, char* argv[]) {
             write_binary(result, inst_outfile);
 
             line_Count += determine_line_no("abs");
+        }
+
+        else {
+            std::cout << std::endl << "!!! Undefined instruction at line " << line_Count << std::endl << std::endl;
+            std::cout << "\t" << inst << std::endl << std::endl;
+            std::cout << "Assemble aborted" << std::endl;
+            break;
         }
     }
 }

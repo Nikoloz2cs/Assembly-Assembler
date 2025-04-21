@@ -146,7 +146,7 @@ static std::unordered_map<std::string, int> registers {
 std::unordered_map<std::string, int> pseudoinstruction_lineNo = {
     {"move", 1}, {"li", 1}, 
     {"sge", 2}, {"sgt", 1},
-    {"sle", 2}, {"seq", 3},
+    {"sle", 2}, {"seq", 4},
     {"sne", 3}, {"bge", 2},
     {"bgt", 2}, {"ble", 2},
     {"blt", 2}, {"abs", 2}

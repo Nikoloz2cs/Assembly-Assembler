@@ -193,54 +193,74 @@ int main(int argc, char* argv[]) {
         if (inst_type == "add") {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 32);
             write_binary(result,inst_outfile);
+
+            line_Count += determine_line_no("add");
         }
         // sub 
         else if (inst_type == "sub") {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 34);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("sub");
         }
         // mult
         else if (inst_type == "mult") {
             int result = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 0, 0, 24);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("mult");
         }
         // div
         else if (inst_type == "div") {
             int result = encode_Rtype(0, registers[terms[1]], registers[terms[2]], 0, 0, 26);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("div");
         }
         // mflo
         else if (inst_type == "mflo") {
             int result = encode_Rtype(0, 0, 0, registers[terms[1]], 0, 18);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("mflo");
         }
         // mfhi
         else if (inst_type == "mfhi") {
             int result = encode_Rtype(0, 0, 0, registers[terms[1]], 0, 16);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("mfhi");
         }
         // slt
         else if (inst_type == "slt") {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 42);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("slt");
         }
         // sll
         else if (inst_type == "sll") {
             // to find shamt, converts string of num to shift to dec
             int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 0);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("sll");
         }
         // srl
         else if (inst_type == "srl") {
             // to find dec, converts string of num to shift to dec
             int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]), 2);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("srl");
         }
         // jr
         else if (inst_type == "jr") {
             // std::cout << "here" << registers[terms[2]]; 
             int result = encode_Rtype(0, registers[terms[1]], 0, 0, 0, 8);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("jr");
         }
         // jalr
         else if (inst_type == "jalr") {
@@ -254,11 +274,15 @@ int main(int argc, char* argv[]) {
                 int result = encode_Rtype(0, registers[terms[1]], 0, 31, 0, 9);
                 write_binary(result, inst_outfile);
             }
+
+            line_Count += determine_line_no("jalr");
         }
         // syscall (as specified)
         else if (inst_type == "syscall") {
             int result = encode_Rtype(0, 0, 0, 26, 0, 9);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("syscall");
         }
 
         // Other Real MIPS Instructions (STARS)
@@ -266,21 +290,29 @@ int main(int argc, char* argv[]) {
         else if (inst_type == "and") {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 36);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("and");
         }
         // or
         else if (inst_type == "or") {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 37);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("or");
         }
         // nor
         else if (inst_type == "nor") {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 39);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("nor");
         }
         // xor
         else if (inst_type == "xor") {
             int result = encode_Rtype(0, registers[terms[2]], registers[terms[3]], registers[terms[1]], 0, 38);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("xor");
         }
 
         // I_type instructions
@@ -289,16 +321,22 @@ int main(int argc, char* argv[]) {
             // to find dec to add, converts string term to dec
             int result = encode_Itype(8, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("andi");
         }
         // lw
         else if (inst_type == "lw") {
             int result = encode_Itype(35, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("lw");
         }
         // sw
         else if (inst_type == "sw") {
             int result = encode_Itype(43, registers[terms[3]], registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("sw");
         }
         // bne
         else if (inst_type == "bne") {
@@ -308,6 +346,8 @@ int main(int argc, char* argv[]) {
 
             int result = encode_Itype(5, registers[terms[1]], registers[terms[2]], offset);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("bne");
         }
         // beq
         else if (inst_type == "beq") {
@@ -317,6 +357,8 @@ int main(int argc, char* argv[]) {
 
             int result = encode_Itype(4, registers[terms[1]], registers[terms[2]], offset);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("beq");
         }
         // la (as specified)
         else if (inst_type == "la") {
@@ -324,27 +366,37 @@ int main(int argc, char* argv[]) {
             int label_address = static_memory_labels[terms[2]];
             int result = encode_Itype(8, 0, registers[terms[1]], label_address);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("la");
         }
         // andi
         else if (inst_type == "andi") {
             int result = encode_Itype(12, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("andi");
         }
         // ori
         else if (inst_type == "ori") {
             int result = encode_Itype(13, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("ori");
         }
         // xori
         else if (inst_type == "xori") {
             int result = encode_Itype(14, registers[terms[2]], registers[terms[1]], std::stoi(terms[3]));
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("xori");
         }
         // lui
         else if (inst_type == "lui")
         {
             int result = encode_Itype(15, 0, registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("lui");
         }
 
         // J_Type Instructions
@@ -353,23 +405,31 @@ int main(int argc, char* argv[]) {
             int label_ind = inst_labels[terms[1]];
             int result = encode_Jtype(2, label_ind);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("j");
         }
         // jal
         else if (inst_type == "jal") {
             int label_ind = inst_labels[terms[1]];
             int result = encode_Jtype(3, label_ind);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("jal");
         }
         // PSEUDO INSTRUCTIONS
         // move: add
         else if (inst_type == "move") {
             int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], 0, 32);
             write_binary(result,inst_outfile);
+
+            line_Count += determine_line_no("move");
         }
         // li: addi
         else if (inst_type == "li") {
             int result = encode_Itype(8, registers["$zero"], registers[terms[1]], std::stoi(terms[2]));
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("li");
         }
         // sge
         else if (inst_type == "sge") {
@@ -378,12 +438,15 @@ int main(int argc, char* argv[]) {
 
             result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0xFFFFFFFF);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("sge");
         }
         // sgt (slt in disguise)
         else if (inst_type == "sgt") {
             int result = encode_Rtype(0, registers[terms[3]], registers[terms[2]], registers[terms[1]], 0, 42);
             write_binary(result, inst_outfile);
-            
+
+            line_Count += determine_line_no("sgt");
         }
         // sle
         else if (inst_type == "sle") {
@@ -392,6 +455,8 @@ int main(int argc, char* argv[]) {
 
             result = encode_Itype(14, registers[terms[1]], registers[terms[1]], 0xFFFFFFFF);
             write_binary(result, inst_outfile);
+            
+            line_Count += determine_line_no("sle");
         }
         // seq
         else if (inst_type == "seq") {
@@ -403,6 +468,8 @@ int main(int argc, char* argv[]) {
 
             result = encode_Rtype(0, registers[terms[1]], registers["$at"], registers[terms[1]], 0, 39);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("seq");
         }
         // sne
         else if (inst_type == "sne") {
@@ -414,6 +481,8 @@ int main(int argc, char* argv[]) {
             
             result = encode_Rtype(0, registers[terms[1]], registers["$at"], registers[terms[1]], 0, 37);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("sne");
         }
 
         // bge: slt -> beq 
@@ -427,6 +496,8 @@ int main(int argc, char* argv[]) {
             // swapped $0 and $at
             int result_beq = encode_Itype(4, 0, 1, offset);
             write_binary(result_beq, inst_outfile);
+
+            line_Count += determine_line_no("bge");
         }
         // bgt: slt -> bne
         else if (inst_type == "bgt") {
@@ -438,6 +509,8 @@ int main(int argc, char* argv[]) {
 
             int result_bne = encode_Itype(5, 0, 1, offset);
             write_binary(result_bne, inst_outfile);
+
+            line_Count += determine_line_no("bgt");
         }
         // ble: slt -> beq 
         else if (inst_type == "ble") {
@@ -449,6 +522,8 @@ int main(int argc, char* argv[]) {
 
             int result_beq = encode_Itype(4, 0, 1, offset);
             write_binary(result_beq, inst_outfile);
+
+            line_Count += determine_line_no("ble");
         }
         // blt: slt -> bne
         else if (inst_type == "blt") {
@@ -460,6 +535,8 @@ int main(int argc, char* argv[]) {
 
             int result_bne = encode_Itype(5, 0, 1, offset);
             write_binary(result_bne, inst_outfile);
+
+            line_Count += determine_line_no("blt");
         }
         // abs
         else if  (inst_type == "abs") {
@@ -468,9 +545,9 @@ int main(int argc, char* argv[]) {
 
             result = encode_Rtype(0, 0, registers[terms[1]], registers[terms[1]], 1, 2);
             write_binary(result, inst_outfile);
+
+            line_Count += determine_line_no("abs");
         }
-        // Iterates to next line (for relative addressing)
-        line_Count++;
     }
 }
 

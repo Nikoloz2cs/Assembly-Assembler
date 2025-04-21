@@ -79,24 +79,30 @@ _syscall1Positive:
 
 #Read Integer
 # load ASCII codes to $v0
-# return the full integer in $a0
+# return the full integer in $
+# note:
+# $t0, $t2
 _syscall5:
-    lw $v0, -256($0)
+    lw $k1, -240($0)
+    beq $k1, $0, _syscall5Done              # if no keypress, jump to _syscall5Done
+    lw $k1, -236($0)                        # if keypress, read keyboard character
     addi $t0, $0, 45                        # $t0 = "-"
-    seq $t1, $v0, $t0                       # $t1 = 1 if negative (since the first character is "-")
-    addi $a0, $0, 0                         # initialize $a0
+    seq $t2, $k1, $t0                       # $t2 = 1 if negative (since the first character is "-")
+    addi $v0, $0, 0                         # initialize $v0
     addi $t2, $0, 10                        # "\n" => ASCII 10
+    addi $v0, $k1, 0                        # the leftmost digit
 _syscall5Loop:
-    beq $v0, $t2, _syscall5LoopEnd          # if encountered "\n", break the loop
-    lw $v0, -256($0)                        # load a new digit
-    addi $a0, $a0, -48                      # convert ASCII to a digit (0 is ASCII 48)
-    add $a0, $a0, $v0                       # $a0 += $v0
+    sw $0, -240($0)                         # clear the leftmost character that is already read
+    lw $k1, -236($0)                        # load the next new digit
+    beq $k1, $t2, _syscall5LoopEnd          # if encountered "\n", break the loop
+    addi $k1, $k1, -48                      # convert ASCII to a digit (0 is ASCII 48)
+    add $v0, $v0, $k1                       # $a0 += $t0
     j _syscall5Loop
 _syscall5LoopEnd:
-    beq $t1, $0, _syscall5Done              # if it was not negative, finish syscall
-    addi $t3, $0, -1                        # if negative, reverse the sign by multiplying by -1
-    mult $a0, $t3
-    mflo $a0
+    beq $t2, $0, _syscall5Done              # if it was not negative, finish syscall
+    addi $t2, $0, -1                        # if negative, reverse the sign by multiplying by -1
+    mult $v0, $t2
+    mflo $v0
 _syscall5Done:
     jr $k0
 

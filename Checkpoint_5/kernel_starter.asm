@@ -35,53 +35,58 @@ _syscall0:
 #Print Integer
 # the integer is stored in $a0
 _syscall1:
-    bge $a0, $0, _syscall1Check0            # if $a0 >= 0, go to _syscall1Check0
-    addi $t0, $0, 45
-    sw $t0, -256($0)                        # if negative, print "-" first
-    addi $t1, $0, 10                        # for a base of 10 (will print integer in decimal)
+    bgt $a0, $0, _syscall1Check0            # if $a0 > 0, go to _syscall1Check0
+    addi $k1, $0, 45
+    sw $k1, -256($0)                        # if negative, print "-" first
+    abs $k1, $k1
+    j _syscall1TenThou
 _syscall1Check0:
-    bne $a0, $0, _syscall1Positive          # if $a0 != 0, go to _syscall1Loop
-    addi $t0, $0, 0
-    sw $t0, -256($0)                        # print 0
+    bne $a0, $0, _syscall1TenThou          # if $a0 != 0, go to _syscall1Loop
+    sw $a0, -256($0)                        # print 0
     j _syscall1Done
-_syscall1Positive:
-    # print out 10000th digit
-    addi $t0, $0, 10000
-    div $a0, $t0
-    mfhi $t0
-    sw $t0, -256($0)
-    
-    # print out 1000th digit
-    addi $t0, $0, 1000
-    div $a0, $t0
-    mfhi $t0
-    sw $t0, -256($0)
-    
-    # print out 100th digit
-    addi $t0, $0, 100
-    div $a0, $t0
-    mfhi $t0
-    sw $t0, -256($0)
-    
-    # print out 10th digit
+_syscall1CheckLeftmost:
+    addi $k1, $0, 10000
+    bge $k1, $a0, _syscall1Thou
+    addi $k1, $0, 1000
+    bge $k1, $a0, _syscall1Hund
+    addi $k1, $0, 100
+    bge $k1, $a0, _syscall1Ten
     addi $t0, $0, 10
-    div $a0, $t0
-    mfhi $t0
-    sw $t0, -256($0)
-
-    # print out 1st digit
-    addi $t0, $0, 10
+    bge $k1, $a0, _syscall1Thou
+    addi $k1, $0, 1
+_syscall1TenThou: # print out 10000th digit
+    div $a0, $k1
+    mfhi $k1
+    sw $k1, -256($0)
+    mflo $a0
+_syscall1Thou: # print out 1000th digit
+    div $a0, $k1
+    mfhi $k1
+    sw $k1, -256($0)
+    mflo $a0
+_syscall1Hund: # print out 100th digit
+    div $a0, $k1
+    mfhi $k1
+    sw $k1, -256($0)
+    mflo $a0
+_syscall1Ten: # print out 10th digit
+    div $a0, $k1
+    mfhi $k1
+    sw $k1, -256($0)
+    mflo $a0
+_syscall1First: # print out 1st digit
     div $a0, $t0
     mflo $t0
     sw $t0, -256($0)
 
+_syscall1Done:
     jr $k0
 
 #Read Integer
-# load ASCII codes to $v0
-# return the full integer in $
+# load ASCII codes to $k1
+# return the full integer in $v0
 # note:
-# $t0, $t1
+# $t0, $t1, $t2
 _syscall5:
     lw $k1, -240($0)
     beq $k1, $0, _syscall5Done              # if no keypress, jump to _syscall5Done
@@ -90,15 +95,19 @@ _syscall5:
     seq $t0, $k1, $t0                       # $t2 = 1 if negative (since the first character is "-")
     addi $v0, $0, 0                         # initialize $v0
     addi $t1, $0, 10                        # "\n" => ASCII 10
+    addi $k1, $k1, -48
     addi $v0, $k1, 0                        # the leftmost digit
 _syscall5Loop:
     sw $0, -240($0)                         # clear the leftmost character that is already read
     lw $k1, -236($0)                        # load the next new digit
     beq $k1, $t1, _syscall5LoopEnd          # if encountered "\n", break the loop
     addi $k1, $k1, -48                      # convert ASCII to a digit (0 is ASCII 48)
-    add $v0, $v0, $k1                       # $a0 += $t0
+    mult $v0, $t1
+    mflo $v0                                # $a0 *= 10
+    add $v0, $v0, $k1                       # $v0 += $k1
     j _syscall5Loop
 _syscall5LoopEnd:
+    sw $0, -240($0)                         # clear the new line
     beq $t0, $0, _syscall5Done              # if it was not negative, finish syscall
     addi $t0, $0, -1                        # if negative, reverse the sign by multiplying by -1
     mult $v0, $t0

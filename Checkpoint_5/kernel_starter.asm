@@ -122,13 +122,23 @@ _syscall10:
 
 #print character
 _syscall11:
-    # print character code goes here
+    sw $a0, -256($0)                        # print the char
     jr $k0
 
 #read character
 _syscall12:
-    # read character code goes here
-    jr $k0
+
+    addi $v0, $0, 0                 #sets v0 to 0
+
+    keyboard_read:                                      
+        bne $0, $v0, charFound      #loops until a keys been pressed
+            lw $v0, -236($0)        #loads 1 to V0 if keyboard is ready
+            j keyboard_read         #loops to check again
+
+    charFound:
+    lw $v0, -236($0)                #loads char into v0
+    sw $0, -240($0)                 #clearn obtained char
+    jr $k0                          #returns
 
 #extra challenge syscalls go here?
 

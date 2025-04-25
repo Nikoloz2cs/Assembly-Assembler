@@ -138,7 +138,6 @@ int main(int argc, char* argv[]) {
 
     // manually adding _END_OF_STATIC_MEMORY_
     static_memory_labels["_END_OF_STATIC_MEMORY_"] = static_address;
-    static_memory.push_back(static_address + 4);
     static_address += 4;
 
 

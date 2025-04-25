@@ -29,8 +29,9 @@ _syscallStart_:
 _syscall0:
     addi $sp, $0, -4096 #Initialize stack pointer
     la $t0, _END_OF_STATIC_MEMORY_ # initialize heap pointer
-    sw $t0, 0(-4096)
+    sw $t0, -4096($0)
     j _syscallEnd_
+
 #Print Integer
 # the integer is stored in $a0
 _syscall1:
@@ -123,13 +124,13 @@ _syscall5Done:
     jr $k0
 
 #Heap allocation
+# input: $a0 (number of bytes requested) 
+# output: $v0 (pointer to / address of requested heap memory)
 _syscall9:
     # Heap allocation code goes here
-    la $v0, 0(-4096)
-    addi $t0, $0, 4
-    mult $a0, $t0
-    mflo $t1
-    add $v0, $v0, $t1      # $v0 = _END_OF_STATIC_MEMORY_ + 4 * $a0
+    lw $v0, -4096($0)
+    add $k1, $v0, $a0      # $v0 = _END_OF_STATIC_MEMORY_ + $a0
+    sw $k1, -4096($0)
     jr $k0
 
 #"End" the program

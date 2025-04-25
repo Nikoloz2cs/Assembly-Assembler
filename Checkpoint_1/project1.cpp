@@ -499,7 +499,7 @@ int main(int argc, char* argv[]) {
             write_binary(result_slt, inst_outfile);
 
             int label_ind = inst_labels[terms[3]];
-            int offset = label_ind - line_Count - 1;
+            int offset = label_ind - line_Count - 1 - 1; // - 1 because the actual branching is happening at the second line
 
             // swapped $0 and $at
             int result_beq = encode_Itype(4, 0, 1, offset);
@@ -513,7 +513,7 @@ int main(int argc, char* argv[]) {
             write_binary(result_slt, inst_outfile);
             
             int label_ind = inst_labels[terms[3]];
-            int offset = label_ind - line_Count - 1;
+            int offset = label_ind - line_Count - 1 - 1; // - 1 because the actual branching is happening at the second line
 
             int result_bne = encode_Itype(5, 0, 1, offset);
             write_binary(result_bne, inst_outfile);
@@ -526,7 +526,7 @@ int main(int argc, char* argv[]) {
             write_binary(result_slt, inst_outfile);
             
             int label_ind = inst_labels[terms[3]];
-            int offset = label_ind - line_Count - 1;
+            int offset = label_ind - line_Count - 1 - 1; // - 1 because the actual branching is happening at the second line
 
             int result_beq = encode_Itype(4, 0, 1, offset);
             write_binary(result_beq, inst_outfile);
@@ -539,7 +539,7 @@ int main(int argc, char* argv[]) {
             write_binary(result_slt, inst_outfile);
             
             int label_ind = inst_labels[terms[3]];
-            int offset = label_ind - line_Count - 1;
+            int offset = label_ind - line_Count - 1 - 1; // - 1 because the actual branching is happening at the second line
 
             int result_bne = encode_Itype(5, 0, 1, offset);
             write_binary(result_bne, inst_outfile);

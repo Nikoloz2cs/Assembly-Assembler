@@ -548,10 +548,10 @@ int main(int argc, char* argv[]) {
         }
         // abs
         else if  (inst_type == "abs") {
-            int result = encode_Rtype(0, 0, registers[terms[2]], registers[terms[1]], 1, 0);
+            int result = encode_Itype(14, registers[terms[2]], registers[terms[1]], -1); // xori with -1
             write_binary(result, inst_outfile);
 
-            result = encode_Rtype(0, 0, registers[terms[1]], registers[terms[1]], 1, 2);
+            result = encode_Itype(8, registers[terms[2]], registers[terms[1]], 1); // addi with 1
             write_binary(result, inst_outfile);
 
             line_Count += determine_line_no("abs");

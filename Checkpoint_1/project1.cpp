@@ -548,6 +548,8 @@ int main(int argc, char* argv[]) {
         }
         // abs
         else if  (inst_type == "abs") {
+            // What if there is a positive value in rs? How does the assmebler know if it should change the sing or not? (not this ALWAYS flips the sign)
+            // what about multiplying by -1 and mfhi? Does this not work because this modifies HI register?
             int result = encode_Itype(14, registers[terms[2]], registers[terms[1]], -1); // xori with -1
             write_binary(result, inst_outfile);
 

@@ -31,54 +31,60 @@ _syscall0:
     la $t0, _END_OF_STATIC_MEMORY_ # initialize heap pointer
     sw $t0, 0(-4096)
     j _syscallEnd_
-
 #Print Integer
 # the integer is stored in $a0
 _syscall1:
-    bgt $a0, $0, _syscall1Check0            # if $a0 > 0, go to _syscall1Check0
+    bge $a0, $0, _syscall1Check0            # if $a0 > 0, go to _syscall1Check0
     addi $k1, $0, 45
     sw $k1, -256($0)                        # if negative, print "-" first
-    abs $k1, $k1
-    j _syscall1TenThou
+    abs $a0, $a0
+    j _syscall1CheckLeftmost
 _syscall1Check0:
-    bne $a0, $0, _syscall1TenThou          # if $a0 != 0, go to _syscall1Loop
+    bne $a0, $0, _syscall1CheckLeftmost     # if $a0 is positive, go to _syscall1CheckLeftmost
     sw $a0, -256($0)                        # print 0
     j _syscall1Done
 _syscall1CheckLeftmost:
     addi $k1, $0, 10000
-    bge $k1, $a0, _syscall1Thou
+    bge $a0, $k1, _syscall1TenThou
     addi $k1, $0, 1000
-    bge $k1, $a0, _syscall1Hund
+    bge $a0, $k1, _syscall1Thou
     addi $k1, $0, 100
-    bge $k1, $a0, _syscall1Ten
-    addi $t0, $0, 10
-    bge $k1, $a0, _syscall1Thou
+    bge $a0, $k1, _syscall1Hund
+    addi $k1, $0, 10
+    bge $a0, $k1, _syscall1Ten
     addi $k1, $0, 1
+    j _syscall1First
 _syscall1TenThou: # print out 10000th digit
+    addi $k1, $0, 10000
     div $a0, $k1
-    mfhi $k1
+    mflo $k1
+    addi $k1, $k1, 48
     sw $k1, -256($0)
-    mflo $a0
+    mfhi $a0
 _syscall1Thou: # print out 1000th digit
+    addi $k1, $0, 1000
     div $a0, $k1
-    mfhi $k1
+    mflo $k1
+    addi $k1, $k1, 48
     sw $k1, -256($0)
-    mflo $a0
+    mfhi $a0
 _syscall1Hund: # print out 100th digit
+    addi $k1, $0, 100
     div $a0, $k1
-    mfhi $k1
+    mflo $k1
+    addi $k1, $k1, 48
     sw $k1, -256($0)
-    mflo $a0
+    mfhi $a0
 _syscall1Ten: # print out 10th digit
+    addi $k1, $0, 10
     div $a0, $k1
-    mfhi $k1
+    mflo $k1
+    addi $k1, $k1, 48
     sw $k1, -256($0)
-    mflo $a0
+    mfhi $a0
 _syscall1First: # print out 1st digit
-    div $a0, $t0
-    mflo $t0
-    sw $t0, -256($0)
-
+    addi $a0, $a0, 48
+    sw $a0, -256($0)
 _syscall1Done:
     jr $k0
 
@@ -95,7 +101,8 @@ _syscall5:
     seq $t0, $k1, $t0                       # $t2 = 1 if negative (since the first character is "-")
     addi $v0, $0, 0                         # initialize $v0
     addi $t1, $0, 10                        # "\n" => ASCII 10
-    addi $k1, $k1, -48
+    addi $k1, $k1, -48  
+    blt $k1, $0, _syscall5Loop
     addi $v0, $k1, 0                        # the leftmost digit
 _syscall5Loop:
     sw $0, -240($0)                         # clear the leftmost character that is already read

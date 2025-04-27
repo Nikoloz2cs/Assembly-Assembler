@@ -1,4 +1,7 @@
 .data
+    score: .word 0 0
+    result: .asciiz "Player 0 won!"
+    score_result: .asciiz "  0 : 0  "
 .text
 .globl main
 main:
@@ -55,6 +58,7 @@ main:
         slt $t5, $t1, $t0  
         beq $t5, $0, right_loop 
 
+reset:
     addi $t9, $0, 87654321   # initial seed value
 
     # make yellow for "deleting" pixels
@@ -318,41 +322,58 @@ no_coll:
     jr $ra
 
 player_1_won:
+    la $t1, score
+    lw $t2, 0($t1)
+    addi $t2, $t2, 1
+    sw $t2, 0($t1)                      # update the score
+
     addi $t0, $0, 1
     j end_game
 
 player_2_won:
+    la $t1, score
+    lw $t2, 4($t1)
+    addi $t2, $t2, 1
+    sw $t2, 4($t1)                      # update the score
+
     addi $t0, $0, 2
     j end_game
 
 end_game:
-    # print "Player{n} won!"
+    # print "Player {n} won!"
     addi $v0, $zero, 11                 # syscall 11 to print character
-    addi $a0, $zero, 80 # P
-    syscall
-    addi $a0, $zero, 108 # l
-    syscall
-    addi $a0, $zero, 97 # a
-    syscall
-    addi $a0, $zero, 121 # y
-    syscall
-    addi $a0, $zero, 101 # e
-    syscall
-    addi $a0, $zero, 114 # r
-    syscall
-    addi $a0, $zero, 32 # ' '
-    syscall
-    addi $a0, $t0, 48 # 1 or 2
-    syscall
-    addi $a0, $zero, 32 # ' '
-    syscall
-    addi $a0, $zero, 119 # w
-    syscall
-    addi $a0, $zero, 111 # o
-    syscall
-    addi $a0, $zero, 110 # n
-    syscall
-    addi $a0, $zero, 33 # !
+
+    la $t1, result
+    lw $t2, 28($t1)
+    add $t2, $t2, $t0
+    sw $t2, 28($t1)                     # update the winner (1 or 2)
+
+    addi $t3, $0, 10                    # "\n"
+    print_result:
+        lw $a0, 0($t1)
+        syscall
+        beq $a0, $t3, end_print_result
+        addi $t1, $t1, 4
+        j print_result
+    end_print_result:
+
+    # print "  {P1 score} : {P2 score}  "
+    la $t1, score_result
+    la $t2, score
+    lw $t4, 0($t2)
+    addi $t4, $t4, 48
+    sw $t4, 8($t1)                     # update player 1 score result
+    lw $t4, 4($t2)
+    addi $t4, $t4, 48
+    sw $t4, 24($t1)                     # update player 2 score result 
+
+    print_score:
+        lw $a0, 0($t1)
+        syscall
+        beq $a0, $t3, end_print_score
+        addi $t1, $t1, 4
+        j print_score
+    end_print_score:
     syscall
 
     addi $v0, $zero, 10                 # syscall 10 to end the program

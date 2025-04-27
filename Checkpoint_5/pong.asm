@@ -2,6 +2,8 @@
     score: .word 0 0
     result: .asciiz "Player 0 won!"
     score_result: .asciiz "  0 : 0  "
+    ball_color: .word 0
+    ball_color_RGB: .word 0 16711680 65280 255 65535 16776960 16711935 16777215
 .text
 .globl main
 main:
@@ -58,14 +60,15 @@ main:
         slt $t5, $t1, $t0  
         beq $t5, $0, right_loop 
 
-reset:
-    addi $t9, $0, 87654321   # initial seed value
 
     # make yellow for "deleting" pixels
     addi $t0, $0, 255 # blue
     sll $t1, $t0, 8   # green
     sll $t2, $t0, 16  # red
     add $s8, $t2, $t1 # make yellow
+
+next_round:
+    addi $t9, $0, 87654321   # initial seed value
 
     # Initialize paddles
     addi $s0, $0, 126 # left y-cord
@@ -100,6 +103,19 @@ game_loop:
     bne  $t0, $0, player_2_won       # Branch to b if ball is beyond the paddles
     slt  $t0, $t2, $s5    # $t0 = 1 if 39 < s5 
     bne  $t0, $0, player_1_won       # Branch to b if ball is beyond the paddles
+    addi $v0, $0, 13
+    syscall                         # change the ball color if requested
+    beq $v0, $0, check_right_paddle
+
+change_ball_color:
+    la $t0, ball_color
+    lw $t1, 0($t0)
+    addi $t1, $t1, 1
+    addi $t2, $0, 8
+    bne $t1, $t2, save_ball_color
+    addi $t1, $t1, -8
+save_ball_color:
+    sw $t1, 0($t0)
 
 check_right_paddle:
     addi $a0, $s3, 0        # Right paddle x
@@ -191,12 +207,30 @@ next_frame:
 # Draws a paddle at given (x, y) position
 # Input: $a0 = x-coord, $a1 = y-coord (top pixel)
 draw_paddle:
+    sw $0, -216($0)      # set to black
     addi $t0, $a1, 0      # Current y = start y 
     addi $t1, $a1, 5      # End y = start y + 4
     sw $a0, -224($0)  # Set X-coord
     paddle_loop:
         sw $t0, -220($0)  # Set Y-coord
         sw $0, -212($0)   # Draw black pixel (0xFFFFFF2C)
+        
+        addi $t0, $t0, 1  # Move to next y-position
+        slt $t2, $t0, $t1  # $t2 = ($t0 < $t1) ? 1 : 0
+        bne $t2, $0, paddle_loop  # Branch if still less
+    
+    jr $ra
+
+# Erase a paddle at given (x, y) position
+# Input: $a0 = x-coord, $a1 = y-coord (top pixel)
+erase_paddle:
+    sw $s8, -216($0)      # set to yellow
+    addi $t0, $a1, 0      # Current y = start y 
+    addi $t1, $a1, 5      # End y = start y + 4
+    sw $a0, -224($0)  # Set X-coord
+    paddle_loop:
+        sw $t0, -220($0)  # Set Y-coord
+        sw $0, -212($0)   # Draw yellow pixel (0xFFFFFF2C)
         
         addi $t0, $t0, 1  # Move to next y-position
         slt $t2, $t0, $t1  # $t2 = ($t0 < $t1) ? 1 : 0
@@ -263,9 +297,20 @@ check_bottom:
     addi $s4, $t0, -1     # Move ball above border
 
 draw_ball:
+    la $t0, ball_color
+    lw $t0, 0($t0)          # load ball color index
+
+    addi $t1, $0, 4
+    mult $t0, $t1
+    mflo $t0
+    
+    la $t1, ball_color_RGB
+    add $t1, $t1, $t0
+    lw $t0, 0($t1)          # load ball color RGB
+
     sw $s5, -224($0)
     sw $s4, -220($0)
-    sw $0, -216($0)
+    sw $t0, -216($0)
     sw $0, -212($0)
     jr $ra
 
@@ -345,7 +390,7 @@ end_game:
 
     la $t1, result
     lw $t2, 28($t1)
-    add $t2, $t2, $t0
+    addi $t2, $t0, 48
     sw $t2, 28($t1)                     # update the winner (1 or 2)
 
     addi $t3, $0, 10                    # "\n"
@@ -376,7 +421,26 @@ end_game:
     end_print_score:
     syscall
 
+    j next_round_init
+
     addi $v0, $zero, 10                 # syscall 10 to end the program
     syscall
 
+next_round_init:
+    # erase left paddle
+    addi $a0, $s1, 0   # Load x-pos
+    addi $a1, $s0, 0   # Load y-pos
+    jal erase_paddle
+    
+    # erase right paddle
+    addi $a0, $s3, 0   # Load x-pos
+    addi $a1, $s2, 0   # Load y-pos
+    jal erase_paddle
 
+    # erase ball
+    sw $s5, -224($0)
+    sw $s4, -220($0)
+    sw $s8, -216($0)
+    sw $0, -212($0)
+
+    j next_round

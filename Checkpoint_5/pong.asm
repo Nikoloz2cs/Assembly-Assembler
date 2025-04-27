@@ -93,9 +93,9 @@ game_loop:
     addi $t1, $0, 12
     addi $t2, $0, 38
     slt  $t0, $s5, $t1    # $t0 = 1 if s5 < 10
-    bne  $t0, $0, end_game       # Branch to b if ball is beyond the paddles
+    bne  $t0, $0, player_2_won       # Branch to b if ball is beyond the paddles
     slt  $t0, $t2, $s5    # $t0 = 1 if 39 < s5 
-    bne  $t0, $0, end_game       # Branch to b if ball is beyond the paddles
+    bne  $t0, $0, player_1_won       # Branch to b if ball is beyond the paddles
 
 check_right_paddle:
     addi $a0, $s3, 0        # Right paddle x
@@ -317,7 +317,44 @@ no_coll:
     addi $v0, $0, 0
     jr $ra
 
+player_1_won:
+    addi $t0, $0, 1
+    j end_game
+
+player_2_won:
+    addi $t0, $0, 2
+    j end_game
+
 end_game:
+    # print "Player{n} won!"
+    addi $v0, $zero, 11                 # syscall 11 to print character
+    addi $a0, $zero, 80 # P
+    syscall
+    addi $a0, $zero, 108 # l
+    syscall
+    addi $a0, $zero, 97 # a
+    syscall
+    addi $a0, $zero, 121 # y
+    syscall
+    addi $a0, $zero, 101 # e
+    syscall
+    addi $a0, $zero, 114 # r
+    syscall
+    addi $a0, $zero, 32 # ' '
+    syscall
+    addi $a0, $t0, 48 # 1 or 2
+    syscall
+    addi $a0, $zero, 32 # ' '
+    syscall
+    addi $a0, $zero, 119 # w
+    syscall
+    addi $a0, $zero, 111 # o
+    syscall
+    addi $a0, $zero, 110 # n
+    syscall
+    addi $a0, $zero, 33 # !
+    syscall
+
     addi $v0, $zero, 10                 # syscall 10 to end the program
     syscall
 

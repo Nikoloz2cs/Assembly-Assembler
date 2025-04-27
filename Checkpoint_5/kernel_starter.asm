@@ -20,6 +20,8 @@ _syscallStart_:
     beq $v0, $k1, _syscall11 #jump to syscall 11
     addi $k1, $0, 12
     beq $v0, $k1, _syscall12 #jump to syscall 12
+    addi $k1, $0, 13
+    beq $v0, $k1, _syscall13 #jump to syscall 12
     # Add branches to any syscalls required for your stars.
 
     #Error state - this should never happen - treat it like an end program
@@ -158,5 +160,14 @@ _syscall12:
     jr $k0                          #returns
 
 #extra challenge syscalls go here?
+
+# read button press
+# output: $v0 <- 1 if pressed otherwise 0
+# turns on the LED if pressed
+_syscall13:
+    addi $v0, $0, 0
+    lw $v0, -192($0)                    # load button press
+    sw $v0, -208($0)                    # turn on the LED if pressed
+    jr $k0
 
 _syscallEnd_:

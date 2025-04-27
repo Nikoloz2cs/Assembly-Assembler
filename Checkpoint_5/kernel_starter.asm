@@ -89,6 +89,8 @@ _syscall1First: # print out 1st digit
     addi $a0, $a0, 48
     sw $a0, -256($0)
 _syscall1Done:
+    addi $k1, $0, 10
+    sw $a0, -256($0)
     jr $k0
 
 #Read Integer

@@ -131,8 +131,10 @@ int main(int argc, char* argv[]) {
             // iterate through characters in the string
             for (char c : static_mem_string) {
                 static_memory.push_back((int) c);
+                static_address += 4;
             }
             static_memory.push_back(char('\n'));
+            static_address += 4;
         }
     }
 

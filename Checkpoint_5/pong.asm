@@ -66,9 +66,9 @@ main:
     sll $t1, $t0, 8   # green
     sll $t2, $t0, 16  # red
     add $s8, $t2, $t1 # make yellow
-
+    
+    addi $t9, $0, 87654344   # initial seed value
 next_round:
-    addi $t9, $0, 87654321   # initial seed value
 
     # Initialize paddles
     addi $s0, $0, 126 # left y-cord
@@ -162,7 +162,7 @@ notw:
     bne $t0, $t1, nots
 
     addi $t0, $0, 135
-    addi $t1, $s0, 4
+    addi $t1, $s0, 5
     beq $t1, $t0, hit_border_s
     addi $a0, $s1, 0   # Load x-pos
     addi $a1, $s0, 0   # Load y-pos
@@ -189,7 +189,7 @@ noti:
     bne $t0, $t1, endkeypress
 
     addi $t0, $0, 135
-    addi $t1, $s2, 4
+    addi $t1, $s2, 5
     beq $t1, $t0, endkeypress
     addi $a0, $s3, 0   # Load x-pos
     addi $a1, $s2, 0   # Load y-pos
@@ -259,16 +259,15 @@ paddle_up:
 paddle_down:
     sw $a0, -224($0)  # Set X-coord
 
-    addi $t0, $a1, 4   
+    sw $a1, -220($0)  
+    sw $s8, -216($0)
+    sw $0, -212($0)  # draw yellow pixel
+
+    addi $t0, $a1, 5   
     sw $t0, -220($0)
     sw $0, -216($0)
     sw $0, -212($0)   # draw black pixel
     
-    addi $t0, $a1, -1     
-    sw $t0, -220($0)  
-    sw $s8, -216($0)
-    sw $0, -212($0)  # draw yellow pixel
-    hit_border_down:
     jr $ra
 
 move_ball:
@@ -331,8 +330,7 @@ check_paddle_collision:
     bne $t1, $0, no_coll
     
     # Now check y collision (ball between paddle top and bottom)
-    addi $t1, $a1, -1
-    slt $t0, $a3, $t1      # $t0=1 if ball_y < paddle_top (above)
+    slt $t0, $a3, $a1      # $t0=1 if ball_y < paddle_top (above)
     bne $t0, $0, no_coll
     
     addi $t2, $a1, 4       # paddle_bottom = top + 4

@@ -37,6 +37,8 @@ _syscall0:
 #Print Integer
 # the integer is stored in $a0
 _syscall1:
+    addi $sp, $sp, -4                       # save $ra
+    sw $ra, 0($sp)
     bge $a0, $0, _syscall1Check0            # if $a0 > 0, go to _syscall1Check0
     addi $k1, $0, 45
     sw $k1, -256($0)                        # if negative, print "-" first
@@ -91,6 +93,8 @@ _syscall1First: # print out 1st digit
 _syscall1Done:
     addi $k1, $0, 10
     sw $a0, -256($0)
+    lw $ra, 0($sp)
+    addi $sp, $sp, 4                        # load $ra
     jr $k0
 
 #Read Integer
@@ -99,6 +103,8 @@ _syscall1Done:
 # note: $at, $t0
 # NEED to save the registers in the heap memory
 _syscall5:
+    addi $sp, $sp, -4                       # save $ra
+    sw $ra, 0($sp)
     lw $k1, -240($0)
     beq $k1, $0, _syscall5Done              # if no keypress, jump to _syscall5Done
     lw $k1, -236($0)                        # if keypress, read keyboard character
@@ -125,6 +131,8 @@ _syscall5LoopEnd:
     mult $v0, $at
     mflo $v0
 _syscall5Done:
+    lw $ra, 0($sp)
+    addi $sp, $sp, 4                        # load $ra
     jr $k0
 
 #Heap allocation

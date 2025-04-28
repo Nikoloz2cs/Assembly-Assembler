@@ -111,9 +111,9 @@ change_ball_color:
     la $t0, ball_color
     lw $t1, 0($t0)
     addi $t1, $t1, 1
-    addi $t2, $0, 8
+    addi $t2, $0, 9
     bne $t1, $t2, save_ball_color
-    addi $t1, $t1, -8
+    addi $t1, $t1, -9
 save_ball_color:
     sw $t1, 0($t0)
 
@@ -421,9 +421,6 @@ end_game:
 
     j next_round_init
 
-    addi $v0, $zero, 10                 # syscall 10 to end the program
-    syscall
-
 next_round_init:
     # erase left paddle
     addi $a0, $s1, 0   # Load x-pos
@@ -442,3 +439,7 @@ next_round_init:
     sw $0, -212($0)
 
     j next_round
+
+end_program:
+    addi $v0, $zero, 10                 # syscall 10 to end the program
+    syscall

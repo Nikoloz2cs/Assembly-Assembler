@@ -86,6 +86,8 @@ next_round:
     addi $a1, $s2, 0   # Load y-pos
     jal draw_paddle 
     
+    jal Gamestart #Plays song
+
     # Draw ball and give direction + movement
     addi $s4, $0, 128 # ball y-cord
     addi $s5, $0, 25  # ball x-cord
@@ -339,6 +341,9 @@ check_paddle_collision:
     
     # COLLISION DETECTED
 
+    j ballHit
+    collideResume:
+
     # use LCG algorithm to get a random y-velocity
     addi    $t0, $0, 1103515245   # LCG multiplier
     addi    $t1, $0, 12345        # LCG increment
@@ -391,6 +396,8 @@ end_game:
     addi $t2, $t0, 48
     sw $t2, 28($t1)                     # update the winner (1 or 2)
 
+    jal gameOverSong
+
     addi $t3, $0, 10                    # "\n"
     print_result:
         lw $a0, 0($t1)
@@ -439,6 +446,191 @@ next_round_init:
     sw $0, -212($0)
 
     j next_round
+
+
+Gamestart:
+
+    addi $t6, $0, 50      #set volume level
+    sw $t6, -124($0)        #load volume level
+
+    sw $0, -120($0)     #turn on Sound
+
+        addi $t6, $0, 523         #Play C5
+        addi $t7, $0, 15
+        sw $t6, -128($0)
+        loopC5:
+            beq $0, $t7, endC5
+            addi $t7, $t7, -1
+            j loopC5
+
+        endC5:
+
+        addi $t6, $0, 659        #Play E5
+        addi $t7, $0, 15
+        sw $t6, -128($0)
+        loopE5:
+            beq $0, $t7, endE5
+            addi $t7, $t7, -1
+            j loopE5
+
+        endE5:
+
+        addi $t6, $0, 784      #Play G5
+        addi $t7, $0, 15        
+        sw $t6, -128($0)
+        loopG5:
+            beq $0, $t7, endG5
+            addi $t7, $t7, -1
+            j loopG5
+
+        endG5:
+
+        addi $t6, $0, 1047      #Play C6
+        addi $t7, $0, 30
+        sw $t6, -128($0)
+        loopC6:
+            beq $0, $t7, endC6
+            addi $t7, $t7, -1
+            j loopC6
+
+        endC6:
+
+       addi $t7, $0, 15
+        sw $0, -120($0)             #Pause
+        loopPause:
+            beq $0, $t7, endPause
+            addi $t7, $t7, -1
+            j loopPause
+
+        endPause:
+        addi $t6, $0, 784
+        sw $t6, -128($0)        #Play G5
+        sw $0, -120($0)
+        addi $t7, $0, 15
+        loop2G5:
+            beq $0, $t7, end2G5
+            addi $t7, $t7, -1
+            j loop2G5
+
+        end2G5:
+
+        addi $t7, $0, 15
+        addi $t6, $0, 880       #Play A5
+        sw $t6, -128($0)
+        loopA5:
+            beq $0, $t7, endA5
+            addi $t7, $t7, -1
+            j loopA5
+
+        endA5:
+
+        addi $t7, $0, 15
+        addi $t6, $0, 784       #Play G5
+        sw $t6, -128($0)
+        loop3G5:
+            beq $0, $t7, end3G5
+            addi $t7, $t7, -1
+            j loop3G5
+
+        end3G5:
+
+        addi $t6, $0, 1047
+        addi $t7, $0, 40
+        sw $t6, -128($0)
+        loop2C6:
+            beq $0, $t7, end2C6
+            addi $t7, $t7, -1
+            j loop2C6
+
+        end2C6:
+        sw $0, -120($0)     #turn off Sound
+        jr $ra
+
+
+ballHit:
+        sw $0, -120($0)     #turn on Sound
+        addi $t6, $0, 700
+        sw $t6, -128($0)
+
+        addi $t7, $0, 2
+        hzloopA:
+            beq $0, $t7, endLoopA
+            addi $t7, $t7, -1
+            j hzloopA
+
+        endLoopA:
+
+
+        addi $t6, $0, 500
+        addi $t7, $0, 2
+        sw $t6, -128($0)
+        hzloopB:
+            beq $0, $t7, endLoopB
+            addi $t7, $t7, -1
+            j hzloopB
+        endLoopB:
+
+        sw $0, -120($0)     #turn on Sound
+
+        j collideResume
+
+gameOverSong:
+    sw $0, -120($0)     #turn on Sound
+    addi $t7, $0, 30        #D3
+    addi $t6, $0, 147
+    sw $t6, -128($0)
+        loopD3:
+            beq $0, $t7, endD3
+            addi $t7, $t7, -1
+            j loopD3
+
+        endD3:
+
+    addi $t7, $0, 30        
+    addi $t6, $0, 139          #Cs3
+    sw $t6, -128($0)
+        loopCs3:
+            beq $0, $t7, endCs3
+            addi $t7, $t7, -1
+            j loopCs3
+
+        endCs3:
+        
+
+    addi $t7, $0, 30
+    addi $t6, $0, 131       #C3
+    sw $t6, -128($0)
+        loopC3:
+            beq $0, $t7, endC3
+            addi $t7, $t7, -1
+            j loopC3
+
+        endC3:
+
+    addi $t8, $0, 4
+        wompWomp:
+        beq $0, $t8, endWomp
+
+        addi $t7, $0, 15
+        addi $t6, $0, 123
+        sw $t6 -128($0)        #short B2
+            loopB2:
+                beq $0, $t7, endB2
+                addi $t7, $t7, -1
+                j loopB2
+
+            endB2:
+        sw $0, -128($0)
+        addi $0, $0, 0
+        addi $0, $0, 0
+
+        addi $t8, $t8, -1
+        j wompWomp
+
+        endWomp:
+
+    sw $0, -120($0)     #turn off Sound
+    jr $ra
 
 end_program:
     addi $v0, $zero, 10                 # syscall 10 to end the program
